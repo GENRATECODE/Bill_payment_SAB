@@ -1,0 +1,47 @@
+Metadata-Version: 2.1
+Name: flet_restyle
+Version: 1.0.0
+Summary: Flet ReStyle.
+Home-page: https://github.com/xzripper/flet_restyle
+Download-URL: https://github.com/xzripper/flet_restyle/archive/refs/tags/v1.0.0.tar.gz
+Author: Ivan Perzhinsky.
+Author-email: name1not1found.com@gmail.com
+License: MIT
+Keywords: utility
+Classifier: Development Status :: 5 - Production/Stable 
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Utilities
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Description-Content-Type: text/x-rst
+License-File: LICENSE.txt
+Requires-Dist: BlurWindow
+
+.. image :: https://github.com/xzripper/flet_restyle/blob/main/ReStyleBanner.png?raw=true
+
+=======================
+Flet ReStyle. [V1.0.0]
+=======================
+*ReStyling for Flet.*
+
+`Documentation <https://github.com/xzripper/flet_restyle/blob/main/docs.md>`_
+
+**Flet:**
+
+.. image :: https://github.com/xzripper/flet_restyle/blob/main/flet.gif?raw=true
+   :width: 500
+
+**Flet ReStyle:**
+
+.. image :: https://github.com/xzripper/flet_restyle/blob/main/restyle.gif?raw=true
+   :width: 500
+
+**Only one line needed:**
+
+.. code :: python
+
+   FletReStyle.apply_config(page, FletReStyleConfig())
+
+------
+
+   Flet ReStyle v1.0.0.

@@ -1,0 +1,173 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table dealer {
+  dealer_id varchar [primary key]
+  company_name varchar
+  name_agent name
+  gst varchar
+  ACOUNT_NO integer
+  IAFC_NO VARCHAR
+  BANK   VARCHAR 
+  BRANCH  VARCHAR 
+  mobile integer
+  email varchar
+  remaining_amount  decimal(10,2)
+}
+
+Table shop {
+  id integer [primary key]
+  username varchar
+  password varchar2
+  gst varchar
+  mobile integer
+  email varchar
+  raw_data_temp varchar
+  role varchar
+  debit integer // sum of all amount sell wholesale amount 
+  credit integer // sum of all amout buy amount 
+  on_bill_payment_retail integer // sum of amount sell retail
+  SPEND   integer // SUM OF SPEND TALBE 
+
+}
+
+Table Customer{
+  cust_id varchar [primary key]
+  name name
+  mobile integer
+  location varchar 
+  type varchar // retail wholesale 
+}
+
+ Table Trasportation {
+  transportation_id varchar [primary key]
+  sender_transport_name varchar 
+  gr_no_s integer
+  recieving_transport_name varchar 
+  gr_no_r integer
+  nag int 
+  charge integer 
+  dearler_id varchar 
+}
+
+table buy{
+  id varchar [primary key ]
+  invoice_number varchar 
+  date date 
+  amount integer 
+  dealer_id varchar 
+  status  varchar //PAID , OUTSTANDING, CASH
+}
+
+Table sell_retail{
+ invoice_no varchar [primary key]
+ amount integer
+ time timestamp
+ custid varchar 
+}
+
+Table sell_wholesale{
+invoice_no varchar [primary key]
+amount integer
+remark varchar 
+time timestamp
+pdf BLOB
+days number
+custid varchar 
+status varchar 
+}
+
+Table employ{
+  emp_id varchar [primary key]
+  name name
+  mobile int 
+  location varchar 
+  salary integer 
+  stardate date
+  enddate date 
+  advance integer
+  balance integer 
+}
+
+
+Table spend{
+  spend_id INT // KEY AUTO_INCREMENT 
+  type ENUM // ('utilities', 'salary', 'inventory', 'maintenance', 'other') NOT NULL  
+  description VARCHAR // 255
+  amount DECIMAL(10,2) // NOT nULL
+  paid_by VARCHAR // 50
+  date date  // NOT NULL
+}
+ref: dealer.dealer_id < Trasportation.dearler_id
+ref : Customer.cust_id < sell_retail.custid
+ref : Customer.cust_id < sell_wholesale.custid
+ref : dealer.dealer_id <  buy.dealer_id
+Table item {
+  item_id varchar [primary key]
+  item_description text
+  item_buy_rate integer
+  gst_percentage int
+  profit_retail  integer 
+  profilt_wholesale integer
+  sudo_rate integer // retail buying reate 
+  unit varchar 
+  dealerid varchar 
+  stock integer
+  reorder_level integer
+}
+ref: dealer.dealer_id < item.dealerid
+Table collection {
+  payment_id varchar  [primary key]
+  amount integer
+  custid varchar 
+  remark varchar 
+  date date 
+  paid_by varchar 
+}
+ref: Customer.cust_id < collection.custid
+Table temp_invoice_data{
+  cust_id varchar
+  item_id varchar 
+}
+ref : Customer.cust_id - temp_invoice_data.cust_id
+ref : item.item_id - temp_invoice_data.item_id
+
+Table Visiting_shop{
+cust_id varchar  [primary key]
+visiting  integer
+date date 
+amount integer // add previous amount to new invoice amount 
+}
+
+
+ref: Visiting_shop.cust_id < Customer.cust_id
+
+Table payment{
+  payment_id varchar [primary key]
+  date date 
+  amount integer
+  dealer_id varchar
+}
+ref: payment.dealer_id  > dealer.dealer_id 
+
+Table sales{
+  sale_id integer [primary key]
+  sale_date date
+  cust_id varchar 
+  total_amount decimal(10,2)
+}
+
+ref: sales.cust_id - Customer.cust_id
+
+Table salesDetails{
+  sale_detail_id Integer [primary key]//auto increment
+ sale_id integer 
+ item_id varchar 
+ quantity integer
+ price Decimal(10,2)
+}
+ref : sales.sale_id < salesDetails.sale_id
+ref: salesDetails.item_id > item.item_id
+
+
+//POSITION({"dealer":{"x":-402.85855311437746,"y":-154.00434157824242,"w":230},"buy":{"x":-665.0326782832193,"y":-662.7754650415143,"w":230},"sell_retail":{"x":821.5907969509014,"y":-640.6730201184091,"w":230},"sell_wholesale":{"x":1064.0060493272924,"y":-412.4641065256362,"w":230},"employ":{"x":805.570203125995,"y":-1021.3209155035123,"w":230},"spend":{"x":-77.73465481651988,"y":-1035.8508765004992,"w":230},"collection":{"x":1147.0725430102434,"y":-93.81125719007838,"w":230},"item":{"x":52.13928551918491,"y":-257.71223167725606,"w":238},"temp_invoice_data":{"x":46.60248454249435,"y":-517.0842539783691,"w":238},"payment":{"x":-260,"y":-578,"w":230},"Customer":{"x":426.2518342856856,"y":-519.7689847241995,"w":230},"Trasportation":{"x":-984,"y":-268,"w":294},"Visiting_shop":{"x":437,"y":-258,"w":230},"sales":{"x":893,"y":97.99999999999997,"w":230},"salesDetails":{"x":479.1853974752539,"y":36.201138932606625,"w":230},"shop":{"x":316.99999999999994,"y":-1022,"w":278}})
