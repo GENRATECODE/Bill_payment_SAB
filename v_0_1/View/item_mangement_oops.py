@@ -27,15 +27,15 @@ class ItemManagement:
         self.btn_search = ft.ElevatedButton(
             "Search",
             style=ft.ButtonStyle(
-                color={ft.ControlState.HOVERED: ft.colors.WHITE, ft.ControlState.FOCUSED: ft.colors.BLUE,
-                       ft.ControlState.DEFAULT: ft.colors.BLACK},
-                bgcolor={ft.ControlState.FOCUSED: ft.colors.PINK_200, "": ft.colors.YELLOW},
+                color={ft.ControlState.HOVERED: ft.Colors.WHITE, ft.ControlState.FOCUSED: ft.Colors.BLUE,
+                       ft.ControlState.DEFAULT: ft.Colors.BLACK},
+                bgcolor={ft.ControlState.FOCUSED: ft.Colors.PINK_200, "": ft.Colors.YELLOW},
                 padding={ft.ControlState.HOVERED: 20},
-                overlay_color=ft.colors.TRANSPARENT,
+                overlay_color=ft.Colors.TRANSPARENT,
                 elevation={"pressed": 0, "": 1},
                 animation_duration=500,
-                side={ft.ControlState.DEFAULT: ft.BorderSide(1, ft.colors.BLUE),
-                      ft.ControlState.HOVERED: ft.BorderSide(2, ft.colors.BLUE)},
+                side={ft.ControlState.DEFAULT: ft.BorderSide(1, ft.Colors.BLUE),
+                      ft.ControlState.HOVERED: ft.BorderSide(2, ft.Colors.BLUE)},
                 shape={ft.ControlState.HOVERED: ft.RoundedRectangleBorder(radius=20),
                        ft.ControlState.DEFAULT: ft.RoundedRectangleBorder(radius=2)},
             ),
@@ -46,20 +46,20 @@ class ItemManagement:
         self.btn_clear = ft.ElevatedButton(
             "Clear",
             style=ft.ButtonStyle(
-                color={ft.ControlState.HOVERED: ft.colors.WHITE, ft.ControlState.FOCUSED: ft.colors.BLUE,
-                       ft.ControlState.DEFAULT: ft.colors.BLACK},
-                bgcolor={ft.ControlState.FOCUSED: ft.colors.PINK_200, "": ft.colors.YELLOW},
+                color={ft.ControlState.HOVERED: ft.Colors.WHITE, ft.ControlState.FOCUSED: ft.Colors.BLUE,
+                       ft.ControlState.DEFAULT: ft.Colors.BLACK},
+                bgcolor={ft.ControlState.FOCUSED: ft.Colors.PINK_200, "": ft.Colors.YELLOW},
                 padding={ft.ControlState.HOVERED: 20},
-                overlay_color=ft.colors.TRANSPARENT,
+                overlay_color=ft.Colors.TRANSPARENT,
                 elevation={"pressed": 0, "": 1},
                 animation_duration=500,
-                side={ft.ControlState.DEFAULT: ft.BorderSide(1, ft.colors.BLUE),
-                      ft.ControlState.HOVERED: ft.BorderSide(2, ft.colors.BLUE)},
+                side={ft.ControlState.DEFAULT: ft.BorderSide(1, ft.Colors.BLUE),
+                      ft.ControlState.HOVERED: ft.BorderSide(2, ft.Colors.BLUE)},
                 shape={ft.ControlState.HOVERED: ft.RoundedRectangleBorder(radius=20),
                        ft.ControlState.DEFAULT: ft.RoundedRectangleBorder(radius=2)},
             ),
             col={'xs': 2},
-            icon=ft.icons.CLEAR_SHARP,
+            icon=ft.Icons.CLEAR_SHARP,
             on_click=self.on_clear
         )
 
@@ -150,7 +150,7 @@ class ItemManagement:
         self.items_list = ft.Column([ft.Container(margin=5,
                                                   padding=4,
                                                   alignment=ft.alignment.center,
-                                                  bgcolor=ft.colors.BLUE_ACCENT,
+                                                  bgcolor=ft.Colors.BLUE_ACCENT,
                                                   content=ft.ResponsiveRow([
                                                       self.id_field, self.name_field,
                                                       self.Type,
@@ -167,7 +167,7 @@ class ItemManagement:
         self.add_button = ft.Column([ft.Container(margin=10,
                                                   padding=10,
                                                   alignment=ft.alignment.center,
-                                                  bgcolor=ft.colors.BLUE_ACCENT,
+                                                  bgcolor=ft.Colors.BLUE_ACCENT,
                                                   content=ft.ResponsiveRow(
                                                       [self.generate_id_btn, self.add_button_btn, self.reset_btn,
                                                        self.update_btn, self.delete_btn, self.export_as_csv_btn]),

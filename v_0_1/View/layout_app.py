@@ -37,7 +37,7 @@ class AppLayout(Row):
         self.page = page
         # self.page.on_resized = self.page_resize
         self.sidebar = Sidebar(self.page)
-        self.toggle_nav_rail_button = ft.VerticalDivider(thickness=0.1,color=ft.colors.TRANSPARENT)
+        self.toggle_nav_rail_button = ft.VerticalDivider(thickness=0.1,color=ft.Colors.TRANSPARENT)
         self._active_view: Control =ft.Text("active side")
         self.controls = [self.sidebar,self.toggle_nav_rail_button,
                                 self.active_view]

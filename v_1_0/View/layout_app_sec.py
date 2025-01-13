@@ -63,10 +63,11 @@ class AppLayout_sec(Row):
         self.sidebar_width=self.app.page.window.width*0.184
         self.sidebar = Container(Sidebar(self, self.page),width=self.sidebar_width)
         home = PopupMenuItem(text="Home sec", on_click=lambda _: page.go("/Home2")  )
-        login_profile_button = PopupMenuItem(text="Log Out", on_click=lambda _: self.app.page.go("/"))
+        login_profile_button = PopupMenuItem(text="Log Out", on_click=self.session_clear)
         profile_button = PopupMenuItem(text="Profile", on_click=lambda _: self.app.page.go("/profile2"))
         setting_button = PopupMenuItem(text="Setting", on_click=lambda _: self.app.page.go("/setting2"))
         self.today=date.today()
+        self.user_name=self.app.page.session.get_keys()[0]
         self.appbar_item = [
             home,
             PopupMenuItem(),  # Divider
@@ -124,18 +125,18 @@ class AppLayout_sec(Row):
         
                     # f"🚲 RAJ DISTRIBUTORS  🚲",
                     # font_family="Pacifico",
-                    # bgcolor=ft.colors.YELLOW,
+                    # bgcolor=ft.Colors.YELLOW,
                     # size=48,
                     # text_align="start",
                     # italic=True,
-                    # color=ft.colors.RED_ACCENT_400,
+                    # color=ft.Colors.RED_ACCENT_400,
                 ),
                 on_tap=lambda _: page.go("/Home2")
             ),
             center_title=True,
             toolbar_height=75,
             bgcolor=colors.WHITE,
-            actions=[ft.Text(f"{self.today}",color='red'),Container(content=PopupMenuButton(items=self.appbar_item),
+            actions=[ft.Text(f"{self.today}",color='red'),ft.Text(f"\t User: {self.user_name}",color='red'),Container(content=PopupMenuButton(items=self.appbar_item),
                                 margin=ft.margin.only(left=50,right=25))]
         )           
         # self.members_view = HomePage(self.page)
@@ -209,7 +210,10 @@ class AppLayout_sec(Row):
         Args:
             view_name (str): The name of the view to display.
         """
-
+    def session_clear(self,e):
+        print("session values clear sec")
+        self.app.page.session.clear()
+        self.app.page.go("/")
     def page_resize(self, e=None):
         # self.active_view.resize(
         #         self.sidebar.visible, self.app.page.window.width, self.app.page.window.height,

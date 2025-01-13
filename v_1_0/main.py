@@ -1,27 +1,7 @@
 import flet as ft
 
-from flet import (
-    AlertDialog,
-    AppBar,
-    Column,
-    Container,
-    ElevatedButton,
-    Icon,
-    Page,
-    PopupMenuButton, 
-    PopupMenuItem,
-    RoundedRectangleBorder,
-    Row,
-    TemplateRoute,
-    Text,
-    TextField,
-    UserControl,
-    View,
-    colors,
-    icons,
-    margin,
-    padding,
-    theme)
+
+from flet import  Theme,View,Colors,Icons,margin,padding,Text,TextField,RoundedRectangleBorder,Row,TemplateRoute,Page,Icon,PopupMenuButton,PopupMenuItem,AlertDialog, AppBar, Column,Container,ElevatedButton
 from View.logo import raj_distributor
 # all Page import in there 
 
@@ -47,8 +27,15 @@ class ShopMangement:
         page.title = "Bill And Management "
         # page.padding = 0  # Ensure no padding on the page
         # page.spacing = 0  # No extra spacing between items
-        page.theme = theme.Theme(font_family="Verdana")
-        page.theme.page_transitions.windows = "cupertino"
+        page.theme = ft.Theme(font_family="Verdana",
+                              page_transitions=ft.PageTransitionsTheme(
+        android=ft.PageTransitionTheme.OPEN_UPWARDS,
+        ios=ft.PageTransitionTheme.CUPERTINO,
+        macos=ft.PageTransitionTheme.FADE_UPWARDS,
+        linux=ft.PageTransitionTheme.ZOOM,
+        windows=ft.PageTransitionTheme.CUPERTINO
+    ))
+        # page.theme.page_transitions.windows = "cupertino"
         page.fonts = {
                 "sonic": "assets/font/Freedom-10eM.ttf",
                 "im_font": "assets/font/IMFellDoublePicaSC-Regular.ttf",
@@ -57,8 +44,8 @@ class ShopMangement:
             }
         page.auto_scroll=False  
         page.scroll=ft.ScrollMode.ADAPTIVE
-        page.adaptive=True
-        page.bgcolor = colors.WHITE
+        page.adaptive=True  
+        page.bgcolor = ft.Colors.WHITE
 
         page.update()
     # it was run fine with old version of flet NOw
@@ -87,7 +74,7 @@ class ShopMangement:
                         ),
                     vertical_alignment=ft.MainAxisAlignment.CENTER,
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                    bgcolor=ft.colors.TRANSPARENT,
+                    bgcolor=ft.Colors.TRANSPARENT,
                     controls=[login_page,
                     ],padding=2,
                 )
@@ -116,7 +103,7 @@ class ShopMangement:
                     "#222831",
                 ]),
                         ),
-                 bgcolor=ft.colors.TRANSPARENT,
+                 bgcolor=ft.Colors.TRANSPARENT,
                     appbar=self.layout.appbarpage,
                     controls=[
                        self.layout,
@@ -148,7 +135,7 @@ class ShopMangement:
                     "#222831",
                 ]),
                         ),
-                 bgcolor=ft.colors.TRANSPARENT,
+                 bgcolor=ft.Colors.TRANSPARENT,
                     appbar=self.layout_sec.appbarpage,
                     controls=[
                        self.layout_sec,

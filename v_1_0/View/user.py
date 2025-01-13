@@ -29,8 +29,8 @@ class ProfileAPP(UserControl):  # Inherit from UserControl
         self.address_show_field = ft.TextField(label='Enter Your Address')
         self.profile_photo_picker = ft.FilePicker(on_result=self.photo_upload_result)
 
-        self.file_button = ft.ElevatedButton('Select Folder', icon=ft.icons.FOLDER, on_click=lambda _: self.bill_path_picker.get_directory_path())
-        self.profile_photo_icon = ft.ElevatedButton('Select Profile Photo', icon=ft.icons.EMOJI_PEOPLE, on_click=lambda _: self.profile_photo_picker.pick_files(allow_multiple=True))
+        self.file_button = ft.ElevatedButton('Select Folder', icon=ft.Icons.FOLDER, on_click=lambda _: self.bill_path_picker.get_directory_path())
+        self.profile_photo_icon = ft.ElevatedButton('Select Profile Photo', icon=ft.Icons.EMOJI_PEOPLE, on_click=lambda _: self.profile_photo_picker.pick_files(allow_multiple=True))
         dialog_column = ft.Column(controls=[
             ft.Row([self.from_name_who_field, self.GST_no_field],),
             ft.Row([self.invoice_bill_who_gst_field, self.invoice_bill_no_gst_field],),
@@ -155,7 +155,7 @@ class ProfileAPP(UserControl):  # Inherit from UserControl
                         weight=ft.FontWeight.BOLD,
                         foreground=ft.Paint(
                             gradient=ft.PaintLinearGradient(
-                                (900, 20), (499, 20), [ft.colors.RED_ACCENT, ft.colors.YELLOW_ACCENT]
+                                (900, 20), (499, 20), [ft.Colors.RED_ACCENT, ft.Colors.YELLOW_ACCENT]
                             )
                         ),
                     ),

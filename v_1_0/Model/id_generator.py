@@ -1,5 +1,12 @@
 import re
 
+from datetime import datetime
+import random
+
+def primarykey():
+    date_part = datetime.now().strftime("%y%m%d")  # Format as YYMMDD
+    random_part = random.randint(0, 999)  # Random 3-digit number
+    return int(f"{date_part}{random_part}")
 def Id_gen(item_code, description, amount, dealer_id):
     # Convert description to uppercase for uniformity
     description = description.upper()

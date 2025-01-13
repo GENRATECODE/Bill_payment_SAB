@@ -79,7 +79,7 @@ class SideNav:
             label_type="all",
             on_change=self.on_nav_change,
             destinations=self.top_nav_items,
-            bgcolor=ft.colors.TRANSPARENT,
+            bgcolor=ft.Colors.TRANSPARENT,
             extended=True,
             expand=True
             # height=110

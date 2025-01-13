@@ -20,13 +20,13 @@ class ControlsGrid(ft.GridView):
                 ft.Container(
                     on_click=self.grid_item_clicked,
                     data=grid_item,
-                    bgcolor=ft.colors.SECONDARY_CONTAINER,
+                    bgcolor=ft.Colors.SECONDARY_CONTAINER,
                     border_radius=5,
                     padding=15,
                     content=ft.Row(
                         alignment=ft.MainAxisAlignment.START,
                         vertical_alignment=ft.MainAxisAlignment.CENTER,
-                        controls=[ft.Icon(name=ft.icons.FOLDER_OPEN),
+                        controls=[ft.Icon(name=ft.Icons.FOLDER_OPEN),
                                   ft.Text(
                                       value=grid_item,
                                       weight=ft.FontWeight.W_500,

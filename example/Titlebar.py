@@ -15,12 +15,12 @@ class TitleBar(ft.Row):
             content=ft.Row(
                 controls=[
                     ft.Container(width=2),
-                    ft.Icon(ft.icons.ALL_INCLUSIVE_OUTLINED, color=ft.colors.WHITE54),
-                    ft.Text("All-Tools",color=ft.colors.WHITE54),
+                    ft.Icon(ft.Icons.ALL_INCLUSIVE_OUTLINED, color=ft.Colors.WHITE54),
+                    ft.Text("All-Tools",color=ft.Colors.WHITE54),
                 ],
                 spacing=15,
             ),
-            bgcolor=ft.colors.TRANSPARENT,
+            bgcolor=ft.Colors.TRANSPARENT,
             height=35,
         )
 
@@ -28,13 +28,13 @@ class TitleBar(ft.Row):
         return ft.Container(
             content=ft.Row(
                 controls=[
-                    self._create_control_button("一", self._window_minimize, ft.colors.BLUE_400),
-                    self._create_control_button("☐", self._window_maximize, ft.colors.BLUE_400),
-                    self._create_control_button("✕", self._window_close, ft.colors.RED_400),
+                    self._create_control_button("一", self._window_minimize, ft.Colors.BLUE_400),
+                    self._create_control_button("☐", self._window_maximize, ft.Colors.BLUE_400),
+                    self._create_control_button("✕", self._window_close, ft.Colors.RED_400),
                 ],
                 spacing=0,
             ),
-            bgcolor=ft.colors.TRANSPARENT,theme=ft.Theme(color_scheme=ft.ColorScheme(primary=ft.colors.WHITE))
+            bgcolor=ft.Colors.TRANSPARENT,theme=ft.Theme(color_scheme=ft.Colorscheme(primary=ft.Colors.WHITE))
         )
 
     def _create_control_button(self, text, on_click, hover_color):
@@ -46,8 +46,8 @@ class TitleBar(ft.Row):
                 on_click=on_click,
                 on_hover=lambda e: self._on_hover(e, hover_color),
                 style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=0)),
-                bgcolor=ft.colors.TRANSPARENT,
-                color=ft.colors.WHITE,
+                bgcolor=ft.Colors.TRANSPARENT,
+                color=ft.Colors.WHITE,
             )
         )
 
@@ -64,5 +64,5 @@ class TitleBar(ft.Row):
         self.page.window.close()
 
     def _on_hover(self, e, hover_color):
-        e.control.bgcolor = hover_color if e.data == "true" else ft.colors.TRANSPARENT
+        e.control.bgcolor = hover_color if e.data == "true" else ft.Colors.TRANSPARENT
         e.control.update()

@@ -13,12 +13,12 @@ class Dashboard(ft.Container):
         app_bar = ft.AppBar(
             title=ft.Text("Dashboard", size=24, weight=ft.FontWeight.BOLD),
             center_title=True,
-            bgcolor=ft.colors.BLUE,
+            bgcolor=ft.Colors.BLUE,
             actions=[
-                ft.IconButton(icon=ft.icons.HOME, tooltip="Overview", on_click=lambda _: self.page.go("/overview")),
-                ft.IconButton(icon=ft.icons.ASSESSMENT, tooltip="Reports", on_click=lambda _: self.page.go("/reports")),
-                ft.IconButton(icon=ft.icons.SETTINGS, tooltip="Settings", on_click=lambda _: self.page.go("/settings")),
-                ft.IconButton(icon=ft.icons.ACCOUNT_CIRCLE, tooltip="Profile"),
+                ft.IconButton(icon=ft.Icons.HOME, tooltip="Overview", on_click=lambda _: self.page.go("/overview")),
+                ft.IconButton(icon=ft.Icons.ASSESSMENT, tooltip="Reports", on_click=lambda _: self.page.go("/reports")),
+                ft.IconButton(icon=ft.Icons.SETTINGS, tooltip="Settings", on_click=lambda _: self.page.go("/settings")),
+                ft.IconButton(icon=ft.Icons.ACCOUNT_CIRCLE, tooltip="Profile"),
             ],
         )
 
@@ -41,7 +41,7 @@ class Dashboard(ft.Container):
                                     padding=ft.padding.all(20),
                                     width=250,
                                     height=150,
-                                    bgcolor=ft.colors.GREEN_200,
+                                    bgcolor=ft.Colors.GREEN_200,
                                     border_radius=ft.border_radius.all(10),
                                 ),
                             ),
@@ -58,7 +58,7 @@ class Dashboard(ft.Container):
                                     padding=ft.padding.all(20),
                                     width=250,
                                     height=150,
-                                    bgcolor=ft.colors.PURPLE_200,
+                                    bgcolor=ft.Colors.PURPLE_200,
                                     border_radius=ft.border_radius.all(10),
                                 ),
                             ),
@@ -75,7 +75,7 @@ class Dashboard(ft.Container):
                                     padding=ft.padding.all(20),
                                     width=250,
                                     height=150,
-                                    bgcolor=ft.colors.RED_200,
+                                    bgcolor=ft.Colors.RED_200,
                                     border_radius=ft.border_radius.all(10),
                                 ),
                             ),
@@ -99,7 +99,7 @@ class Dashboard(ft.Container):
                                 content=ft.Text("Data Table or Chart Here"),
                                 width=800,
                                 height=300,
-                                bgcolor=ft.colors.GREY_200,
+                                bgcolor=ft.Colors.GREY_200,
                                 border_radius=ft.border_radius.all(10),
                                 padding=ft.padding.all(10),
                             ),
@@ -113,7 +113,7 @@ class Dashboard(ft.Container):
             ),
             expand=True,
             padding=ft.padding.all(20),
-            bgcolor=ft.colors.GREY_50,
+            bgcolor=ft.Colors.GREY_50,
       
         )
 

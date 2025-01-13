@@ -32,7 +32,7 @@ class Sidebar(ft.Container):
         self.text_nav_style=ft.TextStyle( word_spacing=5,color="#6A1E55",weight=ft.FontWeight.BOLD,size=11,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,))
         # self.app_layout.page.on_resized=self.on_resize
         self.top_nav_items =[
@@ -103,7 +103,7 @@ class Sidebar(ft.Container):
             label_type="all",
             on_change=self.top_nav_change,
             destinations=self.top_nav_items,
-            bgcolor=ft.colors.TRANSPARENT,
+            bgcolor=ft.Colors.TRANSPARENT,
             extended=True,
             expand=True
             # height=110

@@ -30,7 +30,7 @@ class Daily_spend_app(ft.Container):
             divider_thickness=1,
             show_bottom_border=True,
             vertical_lines=ft.border.BorderSide(3, 'Black'),
-            heading_row_color=ft.colors.BLACK12,
+            heading_row_color=ft.Colors.BLACK12,
             heading_row_height=60,
             border_radius=20,
         )

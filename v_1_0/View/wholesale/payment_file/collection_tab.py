@@ -24,7 +24,7 @@ class colleation_tab_fun(ft.Container):
         },
         # shadow_color="#453C67",
         # padding={ft.ControlState.HOVERED:20},
-        # overlay_color=ft.colors.TRANSPARENT,
+        # overlay_color=ft.Colors.TRANSPARENT,
         elevation={"pressed":0,"":1},
         side={
             ft.ControlState.DEFAULT:ft.BorderSide(1, "#1D24CA"),
@@ -51,7 +51,7 @@ class colleation_tab_fun(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),
                                             keyboard_type=ft.KeyboardType.NAME,
                                             width=200,col={"sm": 6, "md": 4, "xl": 0.8})
@@ -71,7 +71,7 @@ class colleation_tab_fun(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),
                                             hint_text="Enter customer name",keyboard_type=ft.KeyboardType.NAME,
                                             width=200,col={"sm": 6, "md": 4, "xl": 3})
@@ -92,7 +92,7 @@ class colleation_tab_fun(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.STREET_ADDRESS,
                                            width=200,col={"sm": 6, "md": 4, "xl": 3})
         self.search_mobile = ft.TextField(input_filter=ft.NumbersOnlyInputFilter(), 
@@ -110,14 +110,14 @@ class colleation_tab_fun(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),
                                           keyboard_type=ft.KeyboardType.PHONE,  
                                           label="Mobile Number",
                                           hint_text="Enter mobile number", 
                                           width=200,
                                           max_length=10,col={"sm": 6, "md": 4, "xl": 2}) 
-        self.search_ID = ft.TextField(prefix_icon=ft.icons.PERM_IDENTITY_OUTLINED,
+        self.search_ID = ft.TextField(prefix_icon=ft.Icons.PERM_IDENTITY_OUTLINED,
                                       autofocus=True,
                                             selection_color="#526E48",
                                             focused_bgcolor="#C6E7FF",
@@ -133,7 +133,7 @@ class colleation_tab_fun(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.TEXT,
                                       label="Customer ID ",
                                       hint_text="Name_Address_Mobile_Rank ", 
@@ -163,7 +163,7 @@ class colleation_tab_fun(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),
                                             hint_text="Enter customer name",keyboard_type=ft.KeyboardType.NAME,
                                             width=200,col={"sm": 6, "md": 12, "xl": 3})
@@ -184,7 +184,7 @@ class colleation_tab_fun(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.STREET_ADDRESS,
                                            width=200,col={"sm": 6, "md": 12, "xl": 3})
         self.customer_mobile =  ft.TextField(input_filter=ft.NumbersOnlyInputFilter(), 
@@ -202,7 +202,7 @@ class colleation_tab_fun(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),
                                           keyboard_type=ft.KeyboardType.PHONE,  
                                           label="Mobile Number",
@@ -225,7 +225,7 @@ class colleation_tab_fun(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.NUMBER,input_filter=ft.InputFilter(
             allow=True,
             regex_string=r"^\d*\.?\d*$",  # Matches whole numbers and decimals
@@ -246,7 +246,7 @@ class colleation_tab_fun(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),     )
         self.paid_by = ft.TextField(col={"sm": 6, "md": 4, "xl": 2},bgcolor="#EBEAFF",label="Paid By / Collect By", width=200,keyboard_type=ft.KeyboardType.NAME,
                                             selection_color="#526E48",
@@ -262,7 +262,7 @@ class colleation_tab_fun(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),    )
         # Date Picker for Invoice Date
         self.invoice_date = ft.TextField(                                            selection_color="#526E48",
@@ -277,10 +277,10 @@ class colleation_tab_fun(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),
                                             border_radius=ft.border_radius.all(10),keyboard_type=ft.KeyboardType.DATETIME,label="Receiving Date",content_padding=8,suffix=ft.IconButton(
-            icon=ft.icons.CALENDAR_MONTH,  # Use any icon you prefer
+            icon=ft.Icons.CALENDAR_MONTH,  # Use any icon you prefer
             on_click=lambda e: page.open(
                 ft.DatePicker(
                     first_date=datetime.datetime(year=2023, month=1, day=1),

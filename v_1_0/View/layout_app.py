@@ -14,8 +14,8 @@ from flet import (
     TextField,
     border,
     border_radius,
-    colors,
-    icons,
+    Colors,
+    Icons,
     padding,
     ResponsiveRow,
 )
@@ -70,9 +70,10 @@ class AppLayout(Row):
         self.sidebar_width=self.app.page.window.width*0.184
         self.sidebar = Container(Sidebar(self, self.page),width=self.sidebar_width)
         home = PopupMenuItem(text="Home prime ", on_click=lambda _: page.go("/Home"))
-        login_profile_button = PopupMenuItem(text="Log Out", on_click=lambda _: self.app.page.go("/"))
+        login_profile_button = PopupMenuItem(text="Log Out", on_click=self.session_clear)
         profile_button = PopupMenuItem(text="Profile", on_click=lambda _: self.app.page.go("/profile"))
         setting_button = PopupMenuItem(text="Setting", on_click=lambda _: self.app.page.go("/setting"))
+        self.user_name=self.app.page.session.get_keys()[0]
         self.views_page={
             "invoice_w":Invoice_WholeSale(self,self.page),
             "previous_invoice":Previous_Detail(self,self.page),
@@ -142,18 +143,18 @@ class AppLayout(Row):
         
                     # f"🚲 RAJ DISTRIBUTORS  🚲",
                     # font_family="Pacifico",
-                    # bgcolor=ft.colors.YELLOW,
+                    # bgcolor=ft.Colors.YELLOW,
                     # size=48,
                     # text_align="start",
                     # italic=True,
-                    # color=ft.colors.RED_ACCENT_400,
+                    # color=ft.Colors.RED_ACCENT_400,
                 ),
                 on_tap=lambda _: page.go("/Home")
             ),
             center_title=True,
             toolbar_height=75,
-            bgcolor=colors.WHITE,
-            actions=[ft.Text(f"{self.today}",color='red'),Container(content=PopupMenuButton(items=self.appbar_item),
+            bgcolor=Colors.WHITE,
+            actions=[ft.Text(f"{self.today}",color='red'),ft.Text(f"\t User : {self.user_name}",color='red'),Container(content=PopupMenuButton(items=self.appbar_item),
                                 margin=ft.margin.only(left=50,right=25))]
         )           
         # self.members_view = HomePage(self.page)
@@ -168,10 +169,10 @@ class AppLayout(Row):
             self._active_view: Control = Container(ft.Text("Default Error 404{page_name}"), expand=4)
 
         self.toggle_nav_rail_button = IconButton(
-            icon=icons.ARROW_CIRCLE_LEFT,
-            icon_color=colors.BLUE_GREY_400,
+            icon=Icons.ARROW_CIRCLE_LEFT,
+            icon_color=Colors.BLUE_GREY_400,
             selected=False,
-            selected_icon=icons.ARROW_CIRCLE_RIGHT,
+            selected_icon=Icons.ARROW_CIRCLE_RIGHT,
             on_click=self.toggle_nav_rail,
         )
         
@@ -226,7 +227,10 @@ class AppLayout(Row):
         else:
             self.active_view.width=self.app.page.window.width
         self.app.page.update()
-
+    def session_clear(self,e):
+        print("session values clear")
+        self.app.page.session.clear()
+        self.app.page.go("/")
     def toggle_nav_rail(self, e):
         """
         Toggles the visibility of the sidebar.

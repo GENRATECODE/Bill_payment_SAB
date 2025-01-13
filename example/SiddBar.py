@@ -4,16 +4,16 @@ import flet as ft
 
 # 样式和配置分离到单独模块
 class Colors:
-    BG_COLOR = ft.colors.BLACK87
-    ICON_COLOR = ft.colors.GREY
+    BG_COLOR = ft.Colors.BLACK87
+    ICON_COLOR = ft.Colors.GREY
     HOVER_ICON_COLOR = "#f7f8ee"
-    ACTIVE_ICON_COLOR = ft.colors.WHITE
-    TEXT_COLOR = ft.colors.GREY
-    HOVER_BG_COLOR = ft.colors.WHITE10
-    TRANSPARENT = ft.colors.TRANSPARENT
-    USER_DATA_BG_COLOR = ft.colors.BLUE_GREY
-    USER_DATA_TEXT_COLOR = ft.colors.WHITE
-    DIVIDER_COLOR = ft.colors.WHITE30
+    ACTIVE_ICON_COLOR = ft.Colors.WHITE
+    TEXT_COLOR = ft.Colors.GREY
+    HOVER_BG_COLOR = ft.Colors.WHITE10
+    TRANSPARENT = ft.Colors.TRANSPARENT
+    USER_DATA_BG_COLOR = ft.Colors.BLUE_GREY
+    USER_DATA_TEXT_COLOR = ft.Colors.WHITE
+    DIVIDER_COLOR = ft.Colors.WHITE30
 
 class TextStyles:
     USER_DATA = {
@@ -66,7 +66,7 @@ class NavBar(ft.Container):
             controls=[
                 self._create_user_data("W", "Tools", "flet-app"),
                 ft.IconButton(
-                    icon=ft.icons.MENU,
+                    icon=ft.Icons.MENU,
                     icon_color=Colors.ACTIVE_ICON_COLOR,
                     on_click=self.change_sidebar,
                 ),
@@ -74,7 +74,7 @@ class NavBar(ft.Container):
                 *self.menu_items,
                 ft.Divider(height=2, color=Colors.DIVIDER_COLOR),
                 self._create_container_item(
-                    icon_name=ft.icons.LOGOUT_ROUNDED,
+                    icon_name=ft.Icons.LOGOUT_ROUNDED,
                     title="Exit",
                     on_click=lambda _: self.page.window.close(),
                     text_ref=self.logout_text_ref,  # 传递给具体的文本控件

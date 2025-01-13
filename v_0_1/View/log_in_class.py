@@ -38,10 +38,10 @@ class LoginPage:
             autocorrect=False,
             capitalization=ft.TextCapitalization.CHARACTERS,
             color='RED',
-            prefix_icon=ft.icons.ACCOUNT_CIRCLE_SHARP,
+            prefix_icon=ft.Icons.ACCOUNT_CIRCLE_SHARP,
             border_radius=ft.border_radius.all(20),
             error_style=ft.TextStyle(
-                bgcolor=ft.colors.GREY_900,
+                bgcolor=ft.Colors.GREY_900,
                 decoration=ft.TextDecoration.UNDERLINE,
                 italic=True
             )
@@ -52,10 +52,10 @@ class LoginPage:
         return ft.TextField(
             label='Password',
             hint_text=' Enter your Password',
-            prefix_icon=ft.icons.PASSWORD,
+            prefix_icon=ft.Icons.PASSWORD,
             filled=True,
             error_style=ft.TextStyle(
-                bgcolor=ft.colors.GREY_900,
+                bgcolor=ft.Colors.GREY_900,
                 decoration=ft.TextDecoration.UNDERLINE,
                 italic=True
             ),
@@ -71,22 +71,22 @@ class LoginPage:
             visible=False,
             size=16,
             bgcolor='white',
-            color=ft.colors.RED_ACCENT_700
+            color=ft.Colors.RED_ACCENT_700
         )
 
     def create_help_button(self):
         return ft.ElevatedButton(
             text='Help',
-            icon=ft.icons.HELP,
-            icon_color=ft.colors.BLUE,
+            icon=ft.Icons.HELP,
+            icon_color=ft.Colors.BLUE,
             on_hover=self.on_hover_need
         )
 
     def create_login_button(self):
         return ft.ElevatedButton(
             text='LogIn',
-            icon=ft.icons.LOGIN,
-            icon_color=ft.colors.BLUE,
+            icon=ft.Icons.LOGIN,
+            icon_color=ft.Colors.BLUE,
             on_click=self.log_in_function
         )
 
@@ -94,7 +94,7 @@ class LoginPage:
         return ft.ElevatedButton(
             text='Reset',
             icon='reset',
-            icon_color=ft.colors.BLUE,
+            icon_color=ft.Colors.BLUE,
             on_click=self.reset_password
         )
 
@@ -108,7 +108,7 @@ class LoginPage:
                         weight=ft.FontWeight.BOLD,
                         foreground=ft.Paint(
                             gradient=ft.PaintLinearGradient(
-                                (900, 20), (499, 20), [ft.colors.RED_ACCENT, ft.colors.YELLOW_ACCENT]
+                                (900, 20), (499, 20), [ft.Colors.RED_ACCENT, ft.Colors.YELLOW_ACCENT]
                             )
                         ),
                     )
@@ -126,7 +126,7 @@ class LoginPage:
                         weight=ft.FontWeight.BOLD,
                         foreground=ft.Paint(
                             gradient=ft.PaintLinearGradient(
-                                (900, 20), (499, 20), [ft.colors.BLACK45, ft.colors.BLACK87]
+                                (900, 20), (499, 20), [ft.Colors.BLACK45, ft.Colors.BLACK87]
                             )
                         ),
                     )
@@ -160,7 +160,7 @@ class LoginPage:
                         weight=ft.FontWeight.BOLD,
                         foreground=ft.Paint(
                             gradient=ft.PaintLinearGradient(
-                                (900, 20), (499, 20), [ft.colors.RED_ACCENT, ft.colors.YELLOW_ACCENT]
+                                (900, 20), (499, 20), [ft.Colors.RED_ACCENT, ft.Colors.YELLOW_ACCENT]
                             )
                         ),
                     )

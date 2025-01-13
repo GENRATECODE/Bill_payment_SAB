@@ -74,14 +74,14 @@ class InvoiceApp(UserControl):
             divider_thickness=1,
             show_bottom_border=True,
             vertical_lines=ft.border.BorderSide(3, 'Black'),
-            heading_row_color=ft.colors.BLACK12,
+            heading_row_color=ft.Colors.BLACK12,
             heading_row_height=60,
         )
         self.grand_total_amount = ft.Text("Grand Total: Rs. 0.00")
         self.bill_details = ft.Text("Total Bill: Rs. 0.00")
         self.CGST=ft.Text("CGST 6% Rs. 0.00")
         self.SGST=ft.Text("SGST 6% Rs. 0.00")
-        # self.file_button = ft.ElevatedButton('Select Folder', icon=ft.icons.FOLDER, on_click=lambda _: self.file_picker_dialog.get_directory_path())
+        # self.file_button = ft.ElevatedButton('Select Folder', icon=ft.Icons.FOLDER, on_click=lambda _: self.file_picker_dialog.get_directory_path())
 
         self.temp_about = ft.Text('Enter Changes Want')
         self.temp_name = ft.TextField(label="Description of Goods")
@@ -100,19 +100,19 @@ class InvoiceApp(UserControl):
         self.page.add(
             ft.Column([
                 ft.Row([ft.Text("Customer Detail", size=22)], alignment=ft.MainAxisAlignment.CENTER),
-                ft.Divider(color=ft.colors.WHITE70),
+                ft.Divider(color=ft.Colors.WHITE70),
                 ft.Container(margin=10,
                              padding=10,
                              alignment=ft.alignment.center,
-                             bgcolor=ft.colors.BLUE_ACCENT,
+                             bgcolor=ft.Colors.BLUE_ACCENT,
                              content=ft.ResponsiveRow([self.customer_name, self.customer_address, self.customer_mobile, ]),
                              border_radius=10, ),
                 ft.Row([ft.Text("Good Entry", size=22)], alignment=ft.MainAxisAlignment.CENTER),
-                ft.Divider(color=ft.colors.WHITE70),
+                ft.Divider(color=ft.Colors.WHITE70),
                 ft.Container(margin=10,
                              padding=10, 
                              alignment=ft.alignment.center,
-                             bgcolor=ft.colors.BLUE_ACCENT,
+                             bgcolor=ft.Colors.BLUE_ACCENT,
                              content=ft.ResponsiveRow([self.item_id, self.search_results,
                                                        self.item_names,
                                                        self.item_Qty,
@@ -121,21 +121,21 @@ class InvoiceApp(UserControl):
                                                        self.add_button,
                                                        self.generate_bill_button, self.reset_button]),
                              border_radius=10, ),
-                ft.Divider(color=ft.colors.WHITE70),
+                ft.Divider(color=ft.Colors.WHITE70),
                 ft.Row(controls=[]),
                 ft.Row([ft.Text("Good List", size=22)], alignment=ft.MainAxisAlignment.CENTER),
-                ft.Divider(color=ft.colors.WHITE70),
+                ft.Divider(color=ft.Colors.WHITE70),
                 ft.Container(margin=10,
                              padding=10,
                              alignment=ft.alignment.center,
-                             bgcolor=ft.colors.BLUE_ACCENT,
+                             bgcolor=ft.Colors.BLUE_ACCENT,
                              content=ft.ResponsiveRow([self.data_table, ]),
                              border_radius=10, ),
-                ft.Divider(color=ft.colors.WHITE70),
+                ft.Divider(color=ft.Colors.WHITE70),
                 ft.Container(margin=10,
                              padding=10,
                              alignment=ft.alignment.center_left,
-                             bgcolor=ft.colors.BLUE_ACCENT,
+                             bgcolor=ft.Colors.BLUE_ACCENT,
                              content=ft.Column([ft.Row([self.bill_details,
                                               ],
                                             alignment=ft.MainAxisAlignment.END, ),
@@ -144,7 +144,7 @@ class InvoiceApp(UserControl):
                                                 ft.Row([self.grand_total_amount,],alignment=ft.MainAxisAlignment.END),],
                 ),#horizontal_alignment=ft.CrossAxisAlignment.END),
                              border_radius=10, ),
-                ft.Divider(color=ft.colors.WHITE70),
+                ft.Divider(color=ft.Colors.WHITE70),
                 # self.file_button,
                 # self.selected_files
             ], scroll=ft.ScrollMode.AUTO)

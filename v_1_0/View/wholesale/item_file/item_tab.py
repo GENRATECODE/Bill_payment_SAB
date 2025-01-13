@@ -35,7 +35,7 @@ class Item_Add(ft.Container):
         },
         # shadow_color="#453C67",
         # padding={ft.ControlState.HOVERED:20},
-        # overlay_color=ft.colors.TRANSPARENT,
+        # overlay_color=ft.Colors.TRANSPARENT,
         # elevation={"pressed":0,"":1},
         side={
             ft.ControlState.DEFAULT:ft.BorderSide(1, "#1D24CA"),
@@ -63,7 +63,7 @@ class Item_Add(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),
                                             hint_text="Enter Product Name",keyboard_type=ft.KeyboardType.NAME,
                                             width=200,col={"sm": 6, "md": 4, "xl": 4})
@@ -83,7 +83,7 @@ class Item_Add(ft.Container):
                                              label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.NUMBER,input_filter=ft.InputFilter(
             allow=True,
             regex_string=r"^\d*\.?\d*$",  # Matches whole numbers and decimals
@@ -103,7 +103,7 @@ class Item_Add(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.NUMBER,
                                             input_filter=ft.NumbersOnlyInputFilter(),max_length=3)
         self.profit_retail = ft.TextField(col={"sm":  5, "md":  4, "xl": 1.5},label="Retail Rate", width=200,                                            selection_color="#526E48",
@@ -120,7 +120,7 @@ class Item_Add(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.NUMBER,input_filter=ft.InputFilter(
             allow=True,
             regex_string=r"^\d*\.?\d*$",  # Matches whole numbers and decimals
@@ -140,7 +140,7 @@ class Item_Add(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.NUMBER,input_filter=ft.InputFilter(
             allow=True,
             regex_string=r"^\d*\.?\d*$",  # Matches whole numbers and decimals
@@ -160,7 +160,7 @@ class Item_Add(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.NUMBER,input_filter=ft.InputFilter(
             allow=True,
             regex_string=r"^\d*\.?\d*$",  # Matches whole numbers and decimals
@@ -180,7 +180,7 @@ class Item_Add(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.NUMBER,input_filter=ft.InputFilter(
             allow=True,
             regex_string=r"^\d*\.?\d*$",  # Matches whole numbers and decimals
@@ -200,7 +200,7 @@ class Item_Add(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.NUMBER,input_filter=ft.InputFilter(
             allow=True,
             regex_string=r"^\d*\.?\d*$",  # Matches whole numbers and decimals
@@ -221,7 +221,7 @@ class Item_Add(ft.Container):
                                        counter_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=18,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),
                                                 blur_style=ft.ShadowBlurStyle.SOLID,)),
                                                 border_color="#1A1A1D",
@@ -229,11 +229,11 @@ class Item_Add(ft.Container):
                                                 color="#1A1A1D",
                                         focused_bgcolor="#C6E7FF",
                                             focused_color="#3B1E54",
-                                            icon_content=ft.Icon(ft.icons.AD_UNITS_SHARP ),
+                                            icon_content=ft.Icon(ft.Icons.AD_UNITS_SHARP ),
                                             icon_enabled_color="#1A1A1D",label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=18,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),
                                                 blur_style=ft.ShadowBlurStyle.SOLID,)),
                                   
@@ -253,7 +253,7 @@ class Item_Add(ft.Container):
                                        counter_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=18,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),
                                                 blur_style=ft.ShadowBlurStyle.SOLID,)),
                                                 border_color="#1A1A1D",
@@ -261,11 +261,11 @@ class Item_Add(ft.Container):
                                                 color="#1A1A1D",
                                         focused_bgcolor="#C6E7FF",
                                             focused_color="#3B1E54",
-                                            icon_content=ft.Icon(ft.icons.AD_UNITS_SHARP ),
+                                            icon_content=ft.Icon(ft.Icons.AD_UNITS_SHARP ),
                                             icon_enabled_color="#1A1A1D",label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=18,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),
                                                 blur_style=ft.ShadowBlurStyle.SOLID,)),
                                   
@@ -285,7 +285,7 @@ class Item_Add(ft.Container):
                                        counter_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=18,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),
                                                 blur_style=ft.ShadowBlurStyle.SOLID,)),
                                                 border_color="#1A1A1D",
@@ -293,11 +293,11 @@ class Item_Add(ft.Container):
                                                 color="#1A1A1D",
                                         focused_bgcolor="#C6E7FF",
                                             focused_color="#3B1E54",
-                                            icon_content=ft.Icon(ft.icons.AD_UNITS_SHARP ),
+                                            icon_content=ft.Icon(ft.Icons.AD_UNITS_SHARP ),
                                             icon_enabled_color="#1A1A1D",label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=18,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),
                                                 blur_style=ft.ShadowBlurStyle.SOLID,)),
                                   
@@ -307,7 +307,7 @@ class Item_Add(ft.Container):
                                        counter_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=18,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),
                                                 blur_style=ft.ShadowBlurStyle.SOLID,)),
                                                 border_color="#1A1A1D",
@@ -315,11 +315,11 @@ class Item_Add(ft.Container):
                                                 color="#1A1A1D",
                                         focused_bgcolor="#C6E7FF",
                                             focused_color="#3B1E54",
-                                            icon_content=ft.Icon(ft.icons.AD_UNITS_SHARP ),
+                                            icon_content=ft.Icon(ft.Icons.AD_UNITS_SHARP ),
                                             icon_enabled_color="#1A1A1D",label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=18,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),
                                                 blur_style=ft.ShadowBlurStyle.SOLID,)),
                                   
@@ -328,7 +328,7 @@ class Item_Add(ft.Container):
                                        counter_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=18,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),
                                                 blur_style=ft.ShadowBlurStyle.SOLID,)),
                                                 border_color="#1A1A1D",
@@ -336,11 +336,11 @@ class Item_Add(ft.Container):
                                                 color="#1A1A1D",
                                         focused_bgcolor="#C6E7FF",
                                             focused_color="#3B1E54",
-                                            icon_content=ft.Icon(ft.icons.AD_UNITS_SHARP ),
+                                            icon_content=ft.Icon(ft.Icons.AD_UNITS_SHARP ),
                                             icon_enabled_color="#1A1A1D",label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=18,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),
                                                 blur_style=ft.ShadowBlurStyle.SOLID,)),
                                   col={"sm": 6, "md": 4, "xl": 2.3}
@@ -359,7 +359,7 @@ class Item_Add(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.NUMBER,
                                             input_filter=ft.NumbersOnlyInputFilter())
         self.Stock_warning= ft.TextField(col={"sm": 6, "md": 4, "xl": 2.3},label="Stock Warning Label", width=200,                                            selection_color="#526E48",
@@ -377,7 +377,7 @@ class Item_Add(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.NUMBER,
                                             input_filter=ft.NumbersOnlyInputFilter())
         Add_button = ft.FilledButton(
@@ -403,10 +403,10 @@ class Item_Add(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),
                                             border_radius=ft.border_radius.all(10),keyboard_type=ft.KeyboardType.DATETIME,label="Last Date Update",content_padding=8,suffix=ft.IconButton(
-            icon=ft.icons.CALENDAR_MONTH,  # Use any icon you prefer
+            icon=ft.Icons.CALENDAR_MONTH,  # Use any icon you prefer
             on_click=lambda e: self.app_layout.page.open(
                 ft.DatePicker(
                     first_date=datetime.datetime(year=2023, month=1, day=1),
@@ -419,12 +419,12 @@ class Item_Add(ft.Container):
         self.style_col=ft.TextStyle( word_spacing=5,color="#0D1282",weight=ft.FontWeight.BOLD,size=11,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,))
         self.data_table_item=ft.DataTable(expand=False,
                                         border=ft.border.all(2,"black"),
                                         border_radius=10,vertical_lines=ft.BorderSide(1, "black"),
-                                        heading_row_color=ft.colors.BLACK12,
+                                        heading_row_color=ft.Colors.BLACK12,
                                         data_row_color={ft.ControlState.HOVERED: "0x30FF0000"},
                                         divider_thickness=0,
                                         column_spacing=30,bgcolor="#EBEAFF",

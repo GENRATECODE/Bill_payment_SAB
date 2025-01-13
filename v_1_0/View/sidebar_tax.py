@@ -63,7 +63,7 @@ class Sidebar_tax(ft.Container):
             label_type="all",
             on_change=self.top_nav_change,
             destinations=self.top_nav_items,
-            bgcolor=ft.colors.TRANSPARENT,
+            bgcolor=ft.Colors.TRANSPARENT,
             extended=True,
             expand=True
             # height=110

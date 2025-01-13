@@ -25,7 +25,7 @@ class Invoice_WholeSale(ft.Container):
                     text=f"First Number",
                     content=tab_invoice (self,self.app_layout),
                     tab_content=ft.Row([ft.Text(f"Invoice"),ft.IconButton(
-                    icon=ft.icons.ADD,
+                    icon=ft.Icons.ADD,
                     icon_color="blue400",
                     icon_size=20,
                     tooltip="Add New Tap",on_click=self.new
@@ -51,7 +51,7 @@ class Invoice_WholeSale(ft.Container):
         tab_content=ft.Row([
             ft.Text(f"New Portal {self.customer_count}"),
             ft.IconButton(
-                icon=ft.icons.CLOSE,
+                icon=ft.Icons.CLOSE,
                 icon_color="red",
                 icon_size=20,
                 tooltip="Close Tab", on_click=self.tab_update

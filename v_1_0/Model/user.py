@@ -2,6 +2,10 @@ import mysql.connector
 from mysql.connector import Error
 import asyncio
 import base64
+import pandas as pd
+import aiomysql
+import os
+import asyncio
 class User:
     def __init__(self, name):
         self.name = name
@@ -73,6 +77,21 @@ class User:
             return None
         finally:
             cursor.close()
+    async def working_dir(self, username,password):
+        if not self.connection:
+            await self.connect_db()
+
+        cursor = self.connection.cursor()
+        query = "SELECT raw_data_temp FROM shop WHERE username = %s AND password=%s"
+        try:
+            cursor.execute(query, (username,password))
+            user_details = cursor.fetchone()
+            return user_details
+        except Error as e:
+            print(f"Failed to retrieve user details: {e}")
+            return None
+        finally:
+            cursor.close()
     async def Lottie_icon(self, name):
         if not self.connection:
             await self.connect_db()
@@ -122,3 +141,5 @@ class User:
         if self.connection and self.connection.is_connected():
             self.connection.close()
             print("MySQL connection closed.")
+            
+            

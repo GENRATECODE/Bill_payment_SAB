@@ -4,6 +4,7 @@ import time
 import asyncio  
 from View.wholesale.dealer_file.dealer import dealeradd
 from View.wholesale.dealer_file.statement import Statement
+from View.wholesale.dealer_file.bill_detail import details_invoice
 class Dealer(ft.Container):
     def __init__(self,app_layout, page):
         self.app_layout=app_layout
@@ -29,7 +30,7 @@ class Dealer(ft.Container):
         Dealer_statical = ft.Tab(
             text="History",
              tab_content=ft.Row([ft.Text("History",size=24), ],alignment=ft.MainAxisAlignment.SPACE_EVENLY),
-            # content=payment_tab_fun(self,self.page)
+            content=details_invoice(self,self.page)
         )  
         self.tabs_d=ft.Tabs(
             # selected_index=0,

@@ -19,7 +19,7 @@ class AppLayout:
         content_area = ft.Container(
             content=current_page.build(),
             expand=True,
-            bgcolor=ft.colors.WHITE,
+            bgcolor=ft.Colors.WHITE,
         )
 
         # Layout Row (with animated Sidebar)

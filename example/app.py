@@ -14,10 +14,10 @@ class App:
     def __init__(self, page: ft.Page):
         self.page = page
         # page.theme_mode ='dark'
-        # page.bgcolor = ft.colors.TRANSPARENT
+        # page.bgcolor = ft.Colors.TRANSPARENT
         # page.decoration = ft.BoxDecoration(
         #     gradient=ft.LinearGradient(
-        #         colors=[ft.colors.GREEN, ft.colors.BLUE],
+        #         colors=[ft.Colors.GREEN, ft.Colors.BLUE],
         #         begin=ft.alignment.top_left,
         #         end=ft.alignment.bottom_right,
         #         stops=[0.0, 1.0],
@@ -65,27 +65,27 @@ class App:
             {
                 "title": "Home",
                 "route": "/home",
-                "icon": ft.icons.HOME,
+                "icon": ft.Icons.HOME,
             },
             {
                 "title": "Chart",
                 "route": "/404",
-                "icon": ft.icons.DASHBOARD,
+                "icon": ft.Icons.DASHBOARD,
             },
             {
                 "title": "Bar",
                 "route": "/about",
-                "icon": ft.icons.BAR_CHART,
+                "icon": ft.Icons.BAR_CHART,
             },
             {
                 "title": "Data",
                 "route": "/login",
-                "icon": ft.icons.DATA_THRESHOLDING_OUTLINED,
+                "icon": ft.Icons.DATA_THRESHOLDING_OUTLINED,
             },
             {
                 "title": "Settings",
                 "route": "/settings",
-                "icon": ft.icons.SETTINGS,
+                "icon": ft.Icons.SETTINGS,
             },
         ]
         self.page.on_route_change = self.router.route_change

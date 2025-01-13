@@ -80,7 +80,7 @@ CREATE TABLE item (
   dealer_id VARCHAR(60) NOT NULL,
   stock BIGINT NOT NULL,
   reorder_level INT NOT NULL,
-  FOREIGN KEY (dealer_id) REFERENCES dealer(dealer_id)
+  FOREIGN KEY (dealer_id) REFERENCES dealer(dealer_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Collection Table
@@ -91,7 +91,7 @@ CREATE TABLE collection (
   remark TEXT,
   collection_date DATE NOT NULL,
   collected VARCHAR(255) NOT NULL,
-  FOREIGN KEY (cust_id) REFERENCES Customer(cust_id)
+  FOREIGN KEY (cust_id) REFERENCES Customer(cust_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Transportation Table
@@ -105,7 +105,7 @@ CREATE TABLE Transportation (
   nag INT NOT NULL,
   charge DECIMAL(10,2),
   dealer_id VARCHAR(50),
-  FOREIGN KEY (dealer_id) REFERENCES dealer(dealer_id)
+  FOREIGN KEY (dealer_id) REFERENCES dealer(dealer_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Payment Table
@@ -115,15 +115,15 @@ CREATE TABLE payment (
   amount DECIMAL(10,2) NOT NULL,
   dealer_id VARCHAR(255) NOT NULL,
   remark TEXT,
-  FOREIGN KEY (dealer_id) REFERENCES dealer(dealer_id)
+  FOREIGN KEY (dealer_id) REFERENCES dealer(dealer_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Temporary Invoice Data
 CREATE TABLE temp_invoice_data (
   cust_id VARCHAR(60),
   item_id VARCHAR(100),
-  FOREIGN KEY (cust_id) REFERENCES Customer(cust_id),
-  FOREIGN KEY (item_id) REFERENCES item(item_id)
+  FOREIGN KEY (cust_id) REFERENCES Customer(cust_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Buy Table
@@ -134,7 +134,7 @@ CREATE TABLE buy (
   amount DECIMAL(10,2),
   dealer_id VARCHAR(50),
   status ENUM('PAID', 'UNPAID'),
-  FOREIGN KEY (dealer_id) REFERENCES dealer(dealer_id)
+  FOREIGN KEY (dealer_id) REFERENCES dealer(dealer_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Sell Retail Table
@@ -143,7 +143,7 @@ CREATE TABLE sell_retail (
   amount DECIMAL(10,2) NOT NULL,
   sell_time TIMESTAMP NOT NULL,
   cust_id VARCHAR(60) NOT NULL,
-  FOREIGN KEY (cust_id) REFERENCES Customer(cust_id)
+  FOREIGN KEY (cust_id) REFERENCES Customer(cust_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Sell Wholesale Table
@@ -156,7 +156,7 @@ CREATE TABLE sell_wholesale (
   days INT DEFAULT 0,
   cust_id VARCHAR(60) NOT NULL,
   sell_wholesale_status ENUM('PAID', 'UNPAID') NOT NULL,
-  FOREIGN KEY (cust_id) REFERENCES Customer(cust_id)
+  FOREIGN KEY (cust_id) REFERENCES Customer(cust_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Sales Table
@@ -165,7 +165,7 @@ CREATE TABLE sales (
   sale_date DATE NOT NULL,
   cust_id VARCHAR(60),
   total_amount DECIMAL(10,2) NOT NULL,
-  FOREIGN KEY (cust_id) REFERENCES Customer(cust_id)
+  FOREIGN KEY (cust_id) REFERENCES Customer(cust_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Sales Details Table
@@ -175,6 +175,6 @@ CREATE TABLE salesDetails (
   item_id VARCHAR(100) NOT NULL,
   quantity INT NOT NULL,
   price DECIMAL(10,2) NOT NULL,
-  FOREIGN KEY (sale_id) REFERENCES sales(sale_id),
-  FOREIGN KEY (item_id) REFERENCES item(item_id)
+  FOREIGN KEY (sale_id) REFERENCES sales(sale_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE CASCADE ON UPDATE CASCADE
 );

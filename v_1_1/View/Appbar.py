@@ -38,8 +38,9 @@ class CustomAppBar:
         return ft.AppBar(
             leading=self.custom_icon,   
             leading_width=100,
-            title=Text(f"🚲 Raj Distributor Billing 🚲", font_family="Pacifico",bgcolor=ft.colors.YELLOW,
-                       size=48, text_align="start",italic=True,color=ft.colors.RED_ACCENT_400),
+            title=Text(f"🚲 Raj Distributor Billing 🚲", font_family="Pacifico",bgcolor=ft.Colors.YELLOW,
+                       size=48, text_align="start",italic=True,color=ft.Colors.RED_ACCENT_400),
+     
             center_title=True,
             toolbar_height=75,
             bgcolor=colors.WHITE,   

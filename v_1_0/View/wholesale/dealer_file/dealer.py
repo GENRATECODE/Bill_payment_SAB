@@ -1,15 +1,49 @@
 import flet as ft
 from View.logo import invoice_logo
-import time
+import time 
 import datetime
+from flet import TextField, Dropdown,ElevatedButton
 from Model.id_generator import dealer_ID
 from Model.buyyer import dealer_database
+from Model.buyyer import dealer2excel
+
+class button_style(ElevatedButton):
+    def __init__(self, on_click=None, text=None, bgcolor=None,**kwargs):  # Fix kwargs
+        super().__init__(**kwargs)
+        self.on_click = on_click
+        self.text = text
+        
+        # Button style
+        self.style = ft.ButtonStyle(
+            animation_duration=290,
+            color={
+                ft.ControlState.HOVERED: "#3D3BF3",  # Light blue text on hover
+                ft.ControlState.FOCUSED: "#000000",  # Cyan text on focus
+            },
+            bgcolor={
+                "": bgcolor if bgcolor else "#FF2929",  # Default background color
+                ft.ControlState.HOVERED: "#000000",  # Black background on hover
+            },
+            elevation={"pressed": 0, "": 1},
+            side={
+                ft.ControlState.DEFAULT: ft.BorderSide(1, "#1D24CA"),
+                ft.ControlState.HOVERED: ft.BorderSide(1, "#40A2D8"),
+            },
+            shape={
+                ft.ControlState.DEFAULT: ft.RoundedRectangleBorder(radius=5),
+                ft.ControlState.HOVERED: ft.RoundedRectangleBorder(radius=12),
+            },
+        )
+
 class dealeradd(ft.Container):
     def __init__(self, app_layout,page):
         self.app_layout=app_layout
         self.page=page
         super().__init__()
         # self.bgcolor='#f0f0f0'
+        self.database_access=dealer_database()
+        self.gst_detail_already=self.database_access.gst()
+        self.database_access.close_connection()
         self.expand=True
         self.ink=True
         self.padding=ft.padding.all(10)
@@ -29,7 +63,7 @@ class dealeradd(ft.Container):
         },
         # shadow_color="#453C67",
         # padding={ft.ControlState.HOVERED:20},
-        # overlay_color=ft.colors.TRANSPARENT,
+        # overlay_color=ft.Colors.TRANSPARENT,
         # elevation={"pressed":0,"":1},
         side={
             ft.ControlState.DEFAULT:ft.BorderSide(1, "#1D24CA"),
@@ -56,7 +90,7 @@ class dealeradd(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),
                                             hint_text="Enter  Dealer ID",keyboard_type=ft.KeyboardType.NAME,
                                             width=200,col={"sm": 6, "md": 4, "xl": 4})
@@ -77,7 +111,7 @@ class dealeradd(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),
                                             hint_text="Enter  Dealer Agent Name",keyboard_type=ft.KeyboardType.NAME,
                                                                             width=200,col={"sm": 6, "md": 4, "xl": 4})
@@ -97,7 +131,7 @@ class dealeradd(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),
                                             hint_text="Enter  Company Name",keyboard_type=ft.KeyboardType.NAME,
                                             width=200,col={"sm": 6, "md": 4, "xl": 4})
@@ -117,7 +151,7 @@ class dealeradd(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),
                                             keyboard_type=ft.KeyboardType.PHONE,  
                                             label="Mobile Number",
@@ -141,7 +175,7 @@ class dealeradd(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.STREET_ADDRESS,
                                            width=200,col={"sm": 6, "md": 4, "xl": 3}) 
         self.Gst = ft.TextField( on_submit=lambda e: self.Mobile.focus(),
@@ -161,10 +195,10 @@ class dealeradd(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.STREET_ADDRESS,
                                            width=200,col={"sm": 6, "md": 4, "xl": 3}) 
-        self.Email = ft.TextField(          icon=ft.icons.CONTACT_MAIL, on_submit=lambda e: self.Bank.focus(),
+        self.Email = ft.TextField(          icon=ft.Icons.CONTACT_MAIL, on_submit=lambda e: self.Bank.focus(),
                                             selection_color="#526E48",
                                             focused_bgcolor="#C6E7FF",
                                             focused_color="#3B1E54",
@@ -180,13 +214,13 @@ class dealeradd(ft.Container):
                                            label="Email ", suffix_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),
                                            hint_text="Enter Email",
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.EMAIL,
                                            width=200,col={"sm": 6, "md": 4, "xl": 3}) 
         self.Account = ft.TextField(  on_submit=lambda e: self.Ifsc.focus(),
@@ -206,7 +240,7 @@ class dealeradd(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.TEXT,
                                            width=200,col={"sm": 8, "md":10 })
         self.Ifsc = ft.TextField( on_submit=lambda e: self.Branch.focus(),
@@ -226,7 +260,7 @@ class dealeradd(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.STREET_ADDRESS,
                                            width=200,col={"sm": 8, "md":10 })
         self.Branch = ft.TextField( on_submit=self.on_submit,
@@ -246,7 +280,7 @@ class dealeradd(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.STREET_ADDRESS,
                                            width=200,col={"sm": 8, "md":10 })
         self.Bank = ft.TextField( on_submit=lambda e: self.Account.focus(),
@@ -266,12 +300,12 @@ class dealeradd(ft.Container):
                                             label_style=ft.TextStyle( word_spacing=5,color="#6A1E55",size=16,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,)),keyboard_type=ft.KeyboardType.STREET_ADDRESS,
                                            width=200,col={"sm": 8, "md":10 })
 
         self.add_button =ft.FilledButton(
-        content=ft.Row([ft.Text("Add Item",weight=ft.FontWeight.BOLD,size=18,italic=True)]),
+        content=ft.Row([ft.Text("Add Item",weight=ft.FontWeight.BOLD,size=18,italic=True)],alignment=ft.MainAxisAlignment.CENTER),
         tooltip="ADD",
         style=self.style_button,
         width=150,
@@ -280,7 +314,7 @@ class dealeradd(ft.Container):
         ) 
 
         self.summit_button =ft.FilledButton(
-        content=ft.Row([ft.Text("Summit",weight=ft.FontWeight.BOLD,size=18,italic=True)]),
+        content=ft.Row([ft.Text("Summit",weight=ft.FontWeight.BOLD,size=18,italic=True)],alignment=ft.MainAxisAlignment.CENTER),
         tooltip="Summit",
         style=self.style_button,
         width=150,
@@ -314,12 +348,12 @@ class dealeradd(ft.Container):
         self.style_col=ft.TextStyle( word_spacing=5,color="#0D1282",weight=ft.FontWeight.BOLD,size=11,shadow=ft.BoxShadow(
                                                 spread_radius=1,
                                                 blur_radius=15,
-                                                color=ft.colors.BLUE_GREY_300,
+                                                color=ft.Colors.BLUE_GREY_300,
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,))
         self.temp_entry= ft.DataTable(expand=True,
                                         border=ft.border.all(2,"black"),
                                         border_radius=10,vertical_lines=ft.BorderSide(1, "black"),
-                                        heading_row_color=ft.colors.BLACK12,
+                                        heading_row_color=ft.Colors.BLACK12,
                                         data_row_color={ft.ControlState.HOVERED: "0x30FF0000"},
                                         divider_thickness=0,
                                         column_spacing=50,bgcolor="#EBEAFF",
@@ -394,6 +428,7 @@ class dealeradd(ft.Container):
                 
             ],
                                         )
+        self.save_file_dialog = ft.FilePicker(on_result=self.download_item_in_excel_formate)
         self.content = ft.Column(
             [
                 # ft.Divider(),
@@ -407,7 +442,7 @@ class dealeradd(ft.Container):
                                   ], spacing=10,alignment=ft.MainAxisAlignment.CENTER ),
                 # ft.Row([self.amount, self.invoice_date, self.remark, self.paid_by,submit_button,], spacing=10),
                 
-                ft.Row([self.add_button ,self.summit_button,]),
+                ft.Row([self.add_button ,self.summit_button,button_style(text="Export Detail",height=50,width=150,bgcolor="green",tooltip="Dealer Detail in Excel formate",on_click=self.filepicker_iniciate)]),
                 ft.Text(" Current Entry:", size=18, weight="bold", color="#133E87"),
                 # self.results_list 
                 ft.Row([self.temp_entry,],scroll=ft.ScrollMode.HIDDEN ,alignment=ft.MainAxisAlignment.CENTER,expand=True),
@@ -417,6 +452,29 @@ class dealeradd(ft.Container):
             scroll=ft.ScrollMode.AUTO,expand=True
             # padding=20 
         )
+    def filepicker_iniciate(self,e):
+        self.filepicker_activate()
+        self.start_loader()
+        self.save_file_dialog.save_file()
+        self.app_layout.page.update() 
+    def filepicker_activate(self):
+        self.page.overlay.clear()
+        self.page.overlay.append(self.save_file_dialog)
+        self.app_layout.page.update()   
+    def start_loader(self):
+        self.pr=ft.ProgressRing()
+        self.loader = ft.Container(
+            content=self.pr,
+            alignment=ft.alignment.center,
+            bgcolor=ft.Colors.with_opacity(0.5,"BLACK"),  # Optional: Add a translucent background
+            width=self.page.width,
+            height=self.page.height
+        )
+        self.page.overlay.append(self.loader)
+        self.page.update()
+        self.loader.visible = True
+        self.page.update()
+        print("Start Loader")
     def update_table(self):
         self.temp_entry.rows.clear()
         for i in self.item2database:
@@ -437,8 +495,27 @@ class dealeradd(ft.Container):
         ])
             )       
         self.temp_entry.update()
+    async def download_item_in_excel_formate(self,e: ft.FilePickerResultEvent):
+        """ Download Items raw mysql accessing through pandas mysql in formate in excel saving with filepicker"""
+        formatted_time = time.strftime('%H_%M_%S', time.localtime())
+        saving_path= e.path+f"{formatted_time}excel.xlsx" if e.path else "Cancelled!"
+        try:
+            if saving_path =="Cancelled!":
+                self.snack_bar_func("Cancelled")
+                return
+            items=dealer2excel()
+            raw_data= await items.fetch_data(saving_path)
+            self.snack_bar_func(raw_data)
+        except Exception as e:
+            self.snack_bar_func(e)
+    def check_gst_exists(self, gst_number):
+        # Check if the GST number is already in the list
+        return gst_number in self.gst_detail_already
     def add(self,e):
         print('add button click')
+        if self.check_gst_exists(self.Gst.value):
+            self.snack_bar_func(f"GST Number {self.Gst.value} already exists for {self.Company_name.value}")
+            return
         if  self.Dealer_ID.value=="":
             self.snack_bar_func("Dealer ID Empty")
             return
@@ -462,6 +539,7 @@ class dealeradd(ft.Container):
             return
         elif self.Account.value=='' or self.Ifsc.value==''or self.Bank.value==''and self.Branch.value=='':
             self.snack_bar_func("Bank Details Empty")
+            return
         else:
             self.item2database.append(
             {
@@ -479,7 +557,7 @@ class dealeradd(ft.Container):
                 
             }
         )
-        self.Dealer_ID.value=''
+        self.Dealer_ID.value=""
         self.Company_name.value=""
         self.Company_agent_name.value=""
         self.Address.value=""
@@ -491,6 +569,7 @@ class dealeradd(ft.Container):
         self.Mobile.value=""
         self.Email.value=""
         self.Company_agent_name.focus()
+        self.app_layout.page.update()
         self.update_table()
     def snack_bar_func(self,text):
         snack_bar=ft.SnackBar(
@@ -513,9 +592,16 @@ class dealeradd(ft.Container):
         if len(self.item2database)==0:
             self.snack_bar_func("Please Enter Dealer Detail")
         else:
+            self.start_loader()
             self.dealer_database_access=dealer_database()
+            small=1/len(self.item2database)
+            count=0
             for i in self.item2database:
                 self.dealer_database_access.add_dealer(tuple(i.values()))
-            self.snack_bar_func(f"Successful Entry  Detail")
+                self.pr.value=count*small
+                count+=1
+                time.sleep(0.2)
+                self.loader.update()
+            self.snack_bar_func(f"Successful {count}Entry  Detail")
             self.dealer_database_access.close_connection()
             return 

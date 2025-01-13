@@ -769,14 +769,14 @@ if __name__ == "__main__":
 
         search_button = Anchored(ft.FilledButton("Search"), dock_top_right=root)
         search_field = Anchored(
-            ft.Container(ft.TextField(dense=True), bgcolor=ft.colors.BLUE_GREY_900),
+            ft.Container(ft.TextField(dense=True), bgcolor=ft.Colors.BLUE_GREY_900),
             dock_top_left=root,
             right=search_button.left,
             align_height=search_button
         )
         done_button = Anchored(ft.FilledButton("Done"), dock_bottom_right=root)
         result_area = Anchored(
-            ft.Container(results := ft.ListView(), bgcolor=ft.colors.BLUE_GREY_900),
+            ft.Container(results := ft.ListView(), bgcolor=ft.Colors.BLUE_GREY_900),
             dock_sides=root,
             top=search_field.bottom,
             bottom=done_button.top

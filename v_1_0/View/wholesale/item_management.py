@@ -2,7 +2,8 @@ import flet as ft
 from View.logo import invoice_logo
 import time
 from View.wholesale.item_file.item_tab import Item_Add
-# from View.wholesale.item_file.item_stock_tab
+from View.wholesale.item_file.item_stock_tab import stock_detail
+from View.wholesale.item_file.item_mod_tab import stock_modification
 # from View.wholesale.item_file.item_mod_tab
 # from View.wholesale.item_file.item_analysis_tab 
 class Item_Management(ft.Container):
@@ -25,12 +26,12 @@ class Item_Management(ft.Container):
         item_mode_tab = ft.Tab(
             text="Modification",
             tab_content=ft.Row([ft.Text("Modification",size=24),],alignment=ft.MainAxisAlignment.SPACE_EVENLY),
-            # content=payment_tab_fun(self,self.page)
+            content=stock_modification(self,self.page)
         ) 
         item_stock_tab = ft.Tab(
             text="Stock",
             tab_content=ft.Row([ft.Text("Current Stock",size=24),],alignment=ft.MainAxisAlignment.SPACE_EVENLY),
-            # content=payment_tab_fun(self,self.page)
+            content=stock_detail(self,self.page)
         )
         item_analysis_tab = ft.Tab(
             text="Analysis",

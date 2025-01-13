@@ -116,13 +116,13 @@ class tab_invoice(ft.Container):
             divider_thickness=1,
             show_bottom_border=True,
             vertical_lines=ft.border.BorderSide(3, 'Black'),
-            heading_row_color=ft.colors.BLACK12,
+            heading_row_color=ft.Colors.BLACK12,
             heading_row_height=60,expand=3,
         )
         self.grand_total_amount = ft.Text("Grand Total: Rs. 0.00")
         self.payable_amount = ft.Text("Payable Amount: Rs. 0.00")
 
-        # self.file_button = ft.ElevatedButton('Select Folder', icon=ft.icons.FOLDER, on_click=lambda _: self.file_picker_dialog.get_directory_path())
+        # self.file_button = ft.ElevatedButton('Select Folder', icon=ft.Icons.FOLDER, on_click=lambda _: self.file_picker_dialog.get_directory_path())
 
         self.temp_about = ft.Text('Enter Changes Want',col={"md": 3})
         self.temp_name = ft.TextField(label="Description of Goods",col={"md": 3})
@@ -135,7 +135,7 @@ class tab_invoice(ft.Container):
                              padding=10,
                             #  width=250,
                              alignment=ft.alignment.top_center,
-                             bgcolor=ft.colors.BLUE_ACCENT,
+                             bgcolor=ft.Colors.BLUE_ACCENT,
                              content=ft.ResponsiveRow([ft.Row([ft.Text("Goods Entry",text_align=ft.TextAlign.CENTER,color="#1E3E62",size=16)], alignment=ft.MainAxisAlignment.CENTER,expand=True),
                                                         self.item_id, 
                                                     self.search_results,
@@ -150,7 +150,7 @@ class tab_invoice(ft.Container):
                              padding=5,
                             #  width=250,
                              alignment=ft.alignment.top_center,
-                             bgcolor=ft.colors.BLUE_ACCENT,
+                             bgcolor=ft.Colors.BLUE_ACCENT,
                              content=ft.ResponsiveRow([                                                    
                                                        self.generate_bill_button, self.reset_button]),
                              border_radius=10, ),
@@ -158,7 +158,7 @@ class tab_invoice(ft.Container):
                              padding=2,
                             #  width=250,
                              alignment=ft.alignment.top_center,
-                             bgcolor=ft.colors.BLUE_ACCENT,
+                             bgcolor=ft.Colors.BLUE_ACCENT,
                              content=ft.ResponsiveRow([
                                    ft.Row([self.grand_total_amount,],alignment=ft.MainAxisAlignment.END),
                                                                       ft.Row([self.item_discount,],alignment=ft.MainAxisAlignment.END),
@@ -166,29 +166,28 @@ class tab_invoice(ft.Container):
                                  ]),
                              border_radius=10, )], col={"sm": 6, "md": 4, "xl": 2},expand=1, scroll=ft.ScrollMode.AUTO,spacing=0),    # Left side
             ft.Column([  # Right side
-                               
                                 ft.Container(margin=10,
                              padding=10,    
                              alignment=ft.alignment.center,
-                             bgcolor=ft.colors.BLUE_ACCENT,
+                             bgcolor=ft.Colors.BLUE_ACCENT,
                              content=ft.ResponsiveRow([ft.Row([ft.Text("Customer Details",text_align=ft.TextAlign.CENTER,color="#1E3E62",size=16)], alignment=ft.MainAxisAlignment.CENTER,expand=True),self.customer_name, self.customer_address, self.customer_mobile,ft.Row([self.search_number],alignment=ft.MainAxisAlignment.END),]),
        
-                             border_radius=10, ),
+                             border_radius=10, ), # first container
                                 
                                 ft.Container(margin=10,
                              padding=10,
                              alignment=ft.alignment.top_center,
-                             bgcolor=ft.colors.TRANSPARENT,
+                             bgcolor=ft.Colors.TRANSPARENT,
                              content= ft.Row(
         [self.data_table,],scroll=ft.ScrollMode.ADAPTIVE,expand=3
         ),
-                             border_radius=10, expand=3),
+                             border_radius=10, expand=3),# second Container
                                 ft.Container(margin=10,
                              padding=10,
                              alignment=ft.alignment.center_right,    
-                             bgcolor=ft.colors.BLUE_ACCENT,
+                             bgcolor=ft.Colors.BLUE_ACCENT,
                              content=ft.ResponsiveRow([self.uniqure_id, ]),
-                             border_radius=10, expand=True),
+                             border_radius=10, expand=True),# third container
             ], expand=3, scroll=ft.ScrollMode.AUTO)
         ],alignment=ft.MainAxisAlignment.START,expand=True,vertical_alignment=ft.CrossAxisAlignment.START)
                 # Add a floating button to add new customer tabs

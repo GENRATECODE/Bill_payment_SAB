@@ -68,7 +68,7 @@ def AboutView(page):
         label="Input your text here",
         multiline=True,
         shift_enter=True,
-        bgcolor=ft.colors.BLACK45,
+        bgcolor=ft.Colors.BLACK45,
     )
     ocrText = ft.TextField(
         multiline=True,
@@ -76,7 +76,7 @@ def AboutView(page):
         expand=True,
         min_lines=100,
         border=ft.InputBorder.NONE,
-        bgcolor=ft.colors.BLACK45,
+        bgcolor=ft.Colors.BLACK45,
     )
     content = ft.Row(
         [

@@ -79,7 +79,7 @@ def main(page: ft.Page):
     theme.dialog_theme=ft.DialogTheme()
     theme.data_table_theme=ft.DataTableTheme()
     theme.snackbar_theme=ft.SnackBarTheme()
-    page.bgcolor = ft.colors.TRANSPARENT
+    page.bgcolor = ft.Colors.TRANSPARENT
     page.decoration = ft.BoxDecoration(
 
         gradient=ft.LinearGradient(

@@ -41,14 +41,14 @@ def HomeView(page: ft.Page):
 
 
     inputText = ft.TextField(
-        label="Input your text here", multiline=True, shift_enter=True,bgcolor=ft.colors.BLACK45
+        label="Input your text here", multiline=True, shift_enter=True,bgcolor=ft.Colors.BLACK45
     )
     traslatedText = ft.TextField(
         multiline=True,
         shift_enter=True,
         expand=True,
         min_lines=100,
-        border=ft.InputBorder.NONE,bgcolor=ft.colors.BLACK45
+        border=ft.InputBorder.NONE,bgcolor=ft.Colors.BLACK45
     )
     content = ft.Row(
         [   
