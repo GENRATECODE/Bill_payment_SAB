@@ -126,47 +126,23 @@ class stock_detail(Container):
         ])
         self.search=button_style(text="Search It",on_click=self.stock_show) # feature add on_click function
         # using Column
-        self.result_show=ft.Column(expand=True,alignment=ft.MainAxisAlignment.CENTER,scroll=ft.ScrollMode.ADAPTIVE)
+        self.result_show=ft.ListView(expand=True, auto_scroll=False )
+        self.result_show_container=ft.Container(
+                    content=self.result_show,
+                    height=540,  # Set a fixed height for the scrollable area
+                    # width=1420,
+                     col={"xs": 12, "sm": 12, "md": 12, "lg": 12},
+                    padding=10,
+                    # bgcolor="GREY",
+                    border=ft.border.all(1, ft.Colors.BLACK),
+                    )
         # Page Item added here below also define layout of page 
         self.content=ft.Column([
-                         ft.Row([ ft.Stack(
-            [
-                ft.Text(
-                    spans=[
-                        ft.TextSpan(
-                            "Stock Details",
-                            ft.TextStyle(
-                                size=60,
-                                weight=ft.FontWeight.BOLD,
-                                foreground=ft.Paint(
-                                    color=ft.Colors.BLUE_700,
-                                    stroke_width=6,
-                                    stroke_join=ft.StrokeJoin.ROUND,
-                                    style=ft.PaintingStyle.STROKE,
-                                ),
-                            ),
-                        ),
-                    ],
-                ),
-                ft.Text(
-                    spans=[
-                        ft.TextSpan(
-                            "Stock Details",
-                            ft.TextStyle(
-                                size=60,
-                                weight=ft.FontWeight.BOLD,
-                                color=ft.Colors.GREY_300,
-                            ),
-                        ),
-                    ],
-                ),
-            ]
-        ),                       
-                                        ],alignment=ft.MainAxisAlignment.CENTER ),
-                         ft.Divider(color=ft.Colors.TRANSPARENT),
+                               ft.Divider(color=ft.Colors.BLACK),      
+                         
                          ft.Row([self.item_check,self.item_wight,self.search],alignment=ft.MainAxisAlignment.CENTER ),
-                         ft.Divider(color=ft.Colors.TRANSPARENT),
-                         ft.Row([self.result_show,],alignment=ft.MainAxisAlignment.CENTER) ,
+                         ft.Divider(color=ft.Colors.BLACK),
+                         ft.ResponsiveRow([self.result_show_container,],alignment=ft.MainAxisAlignment.CENTER) ,
                          
                                 ])
         # print test
@@ -210,7 +186,7 @@ class stock_detail(Container):
                     self.result_show.controls.append(
                         ft.Row([
         
-                            ft.Container(ft.Text("SR",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=1,border_radius=ft.border_radius.only(5,15,20,8),alignment=ft.Alignment(0.0, 0.0), bgcolor="#4335A7", padding=10, width=80),
+                            ft.Container(ft.Text("SR",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=1,border_radius=ft.border_radius.only(5,15,20,8),alignment=ft.Alignment(0.0, 0.0), bgcolor="#4335A7", padding=10, width=90),
                             # ft.VerticalDivider(),
                             ft.Container(ft.Text("Item ID",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=4,alignment=ft.Alignment(0.0, 0.0),border_radius=ft.border_radius.only(5,15,20,8),bgcolor="#4335A7", padding=10, width=150),
                             # ft.VerticalDivider(),
@@ -241,7 +217,7 @@ class stock_detail(Container):
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,))
                         self.result_show.controls.append(
                             ft.Row([
-                                ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{count}",style=self.style_col),expand=1,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=80 ),
+                                ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{count}",style=self.style_col),expand=1,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=90 ),
                                 ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{i['item_id']}",style=self.style_col),expand=5,alignment=ft.Alignment(0.0, 0.0),border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=150),
                                 ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{i['item_description']}",style=self.style_col),expand=11,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=300),
                                 ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{i[ 'stock']}",style=self.style_col), expand=2,bgcolor=ft.Colors.TRANSPARENT,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),padding=10, width=100),
@@ -260,7 +236,7 @@ class stock_detail(Container):
                     self.result_show.controls.append(
                         ft.Row([
     
-                            ft.Container(ft.Text("SR",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=1,border_radius=ft.border_radius.only(5,15,20,8),alignment=ft.Alignment(0.0, 0.0), bgcolor="#4335A7", padding=10, width=80),
+                            ft.Container(ft.Text("SR",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=1,border_radius=ft.border_radius.only(5,15,20,8),alignment=ft.Alignment(0.0, 0.0), bgcolor="#4335A7", padding=10, width=90),
                             # ft.VerticalDivider(),
                             ft.Container(ft.Text("Item ID",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=4,alignment=ft.Alignment(0.0, 0.0),border_radius=ft.border_radius.only(5,15,20,8),bgcolor="#4335A7", padding=10, width=150),
                             # ft.VerticalDivider(),
@@ -292,7 +268,7 @@ class stock_detail(Container):
                         self.result_show.controls.append(
                             ft.Row([
         
-                                ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{count}",style=self.style_col),expand=1,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=80 ),
+                                ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{count}",style=self.style_col),expand=1,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=90 ),
                                 # ft.VerticalDivider(),
                                 ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{i['item_id']}",style=self.style_col),expand=5,alignment=ft.Alignment(0.0, 0.0),border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=150),
                                 # ft.VerticalDivider(),
@@ -315,7 +291,7 @@ class stock_detail(Container):
                     self.result_show.controls.append(
                         ft.Row([
         
-                            ft.Container(ft.Text("SR",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=1,border_radius=ft.border_radius.only(5,15,20,8),alignment=ft.Alignment(0.0, 0.0), bgcolor="#4335A7", padding=10, width=80),
+                            ft.Container(ft.Text("SR",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=1,border_radius=ft.border_radius.only(5,15,20,8),alignment=ft.Alignment(0.0, 0.0), bgcolor="#4335A7", padding=10, width=90),
                             # ft.VerticalDivider(),
                             ft.Container(ft.Text("Item ID",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=4,alignment=ft.Alignment(0.0, 0.0),border_radius=ft.border_radius.only(5,15,20,8),bgcolor="#4335A7", padding=10, width=150),
                             # ft.VerticalDivider(),
@@ -341,7 +317,7 @@ class stock_detail(Container):
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,))
                             self.result_show.controls.append(
                             ft.Row([
-                                ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{count}",style=self.style_col),expand=1,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=80 ),
+                                ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{count}",style=self.style_col),expand=1,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=90 ),
                                 ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{i['item_id']}",style=self.style_col),expand=5,alignment=ft.Alignment(0.0, 0.0),border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=150),
                                 ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{i['item_description']}",style=self.style_col),expand=11,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=300),
                                 ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{i[ 'stock']}",style=self.style_col), expand=2,bgcolor=ft.Colors.TRANSPARENT,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),padding=10, width=100),
@@ -360,7 +336,7 @@ class stock_detail(Container):
                     self.result_show.controls.append(
                         ft.Row([
     
-                            ft.Container(ft.Text("SR",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=1,border_radius=ft.border_radius.only(5,15,20,8),alignment=ft.Alignment(0.0, 0.0), bgcolor="#4335A7", padding=10, width=80),
+                            ft.Container(ft.Text("SR",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=1,border_radius=ft.border_radius.only(5,15,20,8),alignment=ft.Alignment(0.0, 0.0), bgcolor="#4335A7", padding=10, width=90),
                             # ft.VerticalDivider(),
                             ft.Container(ft.Text("Item ID",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=4,alignment=ft.Alignment(0.0, 0.0),border_radius=ft.border_radius.only(5,15,20,8),bgcolor="#4335A7", padding=10, width=150),
                             # ft.VerticalDivider(),
@@ -387,7 +363,7 @@ class stock_detail(Container):
                             self.result_show.controls.append(
                             ft.Row([
         
-                                ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{count}",style=self.style_col),expand=1,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=80 ),
+                                ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{count}",style=self.style_col),expand=1,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=90 ),
                                 # ft.VerticalDivider(),
                                 ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{i['item_id']}",style=self.style_col),expand=5,alignment=ft.Alignment(0.0, 0.0),border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=150),
                                 # ft.VerticalDivider(),
@@ -410,7 +386,7 @@ class stock_detail(Container):
                     self.result_show.controls.append(
                         ft.Row([
         
-                            ft.Container(ft.Text("SR",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=1,border_radius=ft.border_radius.only(5,15,20,8),alignment=ft.Alignment(0.0, 0.0), bgcolor="#4335A7", padding=10, width=80),
+                            ft.Container(ft.Text("SR",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=1,border_radius=ft.border_radius.only(5,15,20,8),alignment=ft.Alignment(0.0, 0.0), bgcolor="#4335A7", padding=10, width=90),
                             # ft.VerticalDivider(),
                             ft.Container(ft.Text("Item ID",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=4,alignment=ft.Alignment(0.0, 0.0),border_radius=ft.border_radius.only(5,15,20,8),bgcolor="#4335A7", padding=10, width=150),
                             # ft.VerticalDivider(),
@@ -437,7 +413,7 @@ class stock_detail(Container):
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,))
                             self.result_show.controls.append(
                             ft.Row([
-                                ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{count}",style=self.style_col),expand=1,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=80 ),
+                                ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{count}",style=self.style_col),expand=1,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=90 ),
                                 ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{i['item_id']}",style=self.style_col),expand=5,alignment=ft.Alignment(0.0, 0.0),border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=150),
                                 ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{i['item_description']}",style=self.style_col),expand=11,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=300),
                                 ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{i[ 'stock']}",style=self.style_col), expand=2,bgcolor=ft.Colors.TRANSPARENT,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),padding=10, width=100),
@@ -456,7 +432,7 @@ class stock_detail(Container):
                     self.result_show.controls.append(
                         ft.Row([
     
-                            ft.Container(ft.Text("SR",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=1,border_radius=ft.border_radius.only(5,15,20,8),alignment=ft.Alignment(0.0, 0.0), bgcolor="#4335A7", padding=10, width=80),
+                            ft.Container(ft.Text("SR",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=1,border_radius=ft.border_radius.only(5,15,20,8),alignment=ft.Alignment(0.0, 0.0), bgcolor="#4335A7", padding=10, width=90),
                             # ft.VerticalDivider(),
                             ft.Container(ft.Text("Item ID",size=16,weight=ft.FontWeight.BOLD,color='#131010'),shadow=ft.BoxShadow(spread_radius=1,blur_radius=15,color="#8D77AB",offset=ft.Offset(0, 0),blur_style=ft.ShadowBlurStyle.OUTER,),expand=4,alignment=ft.Alignment(0.0, 0.0),border_radius=ft.border_radius.only(5,15,20,8),bgcolor="#4335A7", padding=10, width=150),
                             # ft.VerticalDivider(),
@@ -481,7 +457,7 @@ class stock_detail(Container):
                                                 offset=ft.Offset(0,0),blur_style=ft.ShadowBlurStyle.SOLID,))
                             self.result_show.controls.append(
                             ft.Row([
-                                ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{count}",style=self.style_col),expand=1,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=80 ),
+                                ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{count}",style=self.style_col),expand=1,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=90 ),
                                 ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{i['item_id']}",style=self.style_col),expand=5,alignment=ft.Alignment(0.0, 0.0),border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=150),
                                 ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{i['item_description']}",style=self.style_col),expand=11,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),bgcolor=ft.Colors.TRANSPARENT, padding=10, width=300),
                                 ft.Container(on_hover=self.on_hover_function,ink=False,content=ft.Text(f"{i[ 'stock']}",style=self.style_col), expand=2,bgcolor=ft.Colors.TRANSPARENT,alignment=ft.Alignment(0.0, 0.0), border_radius=ft.border_radius.all(10),padding=10, width=100),

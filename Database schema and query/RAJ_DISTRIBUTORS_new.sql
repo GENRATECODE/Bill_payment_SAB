@@ -14,6 +14,7 @@ CREATE TABLE shop (
   email VARCHAR(60) NOT NULL,
   raw_data_temp TEXT NOT NULL,
   role VARCHAR(40) NOT NULL,
+  bill_no INT DEFAULT 0 NOT NULL,
   debit DECIMAL(10,2) not null,
   credit DECIMAL(10,2) not null,
   on_bill_payment_retail DECIMAL(10,2) not null,
@@ -44,14 +45,6 @@ CREATE TABLE dealer (
   email VARCHAR(255)
 );
 
--- Customer Table
-CREATE TABLE Customer (
-  cust_id VARCHAR(60) PRIMARY KEY NOT NULL,
-  person_name VARCHAR(100) NOT NULL,
-  mobile VARCHAR(16),
-  location VARCHAR(255),
-  cust_type ENUM('WHOLE_SALE', 'RETAIL_SALE') NOT NULL
-);
 
 -- Employee Table
 CREATE TABLE employ (
@@ -69,7 +62,8 @@ CREATE TABLE employ (
 -- Step 2: Dependent Tables
 -- Item Table
 CREATE TABLE item (
-  item_id VARCHAR(100) PRIMARY KEY NOT NULL,
+item_super_key VARCHAR(150) unique PRIMARY KEY NOT NULL,
+  item_id VARCHAR(100)  unique NOT NULL,
   item_description TEXT NOT NULL,
   item_buy_rate DECIMAL(10,2) NOT NULL,
   gst_percentage DECIMAL(3,1) NOT NULL,
@@ -80,6 +74,7 @@ CREATE TABLE item (
   dealer_id VARCHAR(60) NOT NULL,
   stock BIGINT NOT NULL,
   reorder_level INT NOT NULL,
+  PRIMARY KEY (item_super_key, item_id),
   FOREIGN KEY (dealer_id) REFERENCES dealer(dealer_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -121,9 +116,9 @@ CREATE TABLE payment (
 -- Temporary Invoice Data
 CREATE TABLE temp_invoice_data (
   cust_id VARCHAR(60),
-  item_id VARCHAR(100),
+  item_super_key VARCHAR(100),
   FOREIGN KEY (cust_id) REFERENCES Customer(cust_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (item_super_key) REFERENCES item(item_super_key) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Buy Table
@@ -133,8 +128,20 @@ CREATE TABLE buy (
   invoice_date DATE,
   amount DECIMAL(10,2),
   dealer_id VARCHAR(50),
-  status ENUM('PAID', 'UNPAID'),
+  status ENUM('PAID', 'UNPAID','Partial Paid'),
   FOREIGN KEY (dealer_id) REFERENCES dealer(dealer_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+-- WORKING ON SALES DATABASE TABLES 
+-- customer 
+-- Customer Table
+CREATE TABLE Customer (
+  cust_id VARCHAR(60) PRIMARY KEY NOT NULL,
+  person_name VARCHAR(100) NOT NULL,
+  mobile VARCHAR(16),
+  location VARCHAR(255),
+  cust_type ENUM('WHOLE_SALE', 'RETAIL_SALE') NOT NULL,
+  VISITING_TIME  timestamp NOT NULL DEFAULT current_timestamp,
+  visited bigint  -- already visiting time after invoice genereate then update custoemr visitng datail as like date number 
 );
 
 -- Sell Retail Table
@@ -143,6 +150,8 @@ CREATE TABLE sell_retail (
   amount DECIMAL(10,2) NOT NULL,
   sell_time TIMESTAMP NOT NULL,
   cust_id VARCHAR(60) NOT NULL,
+  unique_id varchar(100) not null,
+  pdf BLOB NOT NULL,
   FOREIGN KEY (cust_id) REFERENCES Customer(cust_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -158,23 +167,13 @@ CREATE TABLE sell_wholesale (
   sell_wholesale_status ENUM('PAID', 'UNPAID') NOT NULL,
   FOREIGN KEY (cust_id) REFERENCES Customer(cust_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+-- sales log for Retail both 
 
--- Sales Table
-CREATE TABLE sales (
-  sale_id INT PRIMARY KEY AUTO_INCREMENT,
-  sale_date DATE NOT NULL,
-  cust_id VARCHAR(60),
-  total_amount DECIMAL(10,2) NOT NULL,
-  FOREIGN KEY (cust_id) REFERENCES Customer(cust_id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
--- Sales Details Table
+-- Sales_Details Table
 CREATE TABLE salesDetails (
   sale_details_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-  sale_id INT NOT NULL,
   item_id VARCHAR(100) NOT NULL,
   quantity INT NOT NULL,
   price DECIMAL(10,2) NOT NULL,
-  FOREIGN KEY (sale_id) REFERENCES sales(sale_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (item_id) REFERENCES item(item_super_key) ON DELETE CASCADE ON UPDATE CASCADE
 );

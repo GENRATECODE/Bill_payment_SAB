@@ -5,9 +5,12 @@ from flet import TextField, ElevatedButton
 from Controller.invoice_option_tax import WInvoice
 import win32print
 import os
+import pygtrie
 import win32api
+from rapidfuzz import process
 from Model.items import Item  
-
+import asyncio
+from Model.custmer import custmers
 # Edit text_filed_style
 class text_filed_style(TextField):
     def __init__(self, label=None, capitalizationn=None, hint_text=None, 
@@ -93,11 +96,16 @@ class tab_invoice(ft.Container):
         self.margin=ft.margin.symmetric(vertical=10)
         self.expand=6
         # Database call for item table import data
+        self.debounce_task=None # Task to handle debouncing
         self.items_database = Item() # database connection
         self.items = self.items_database.list_items()# item
         self.items_database.close_connection() # close connection 
         self.goods_detail=list()
         self.discount_dict=dict()
+        # customer Details Entry here 
+        self.customer_=custmers()
+        self.customer_detail=self.customer_.cust_fetch_wholesale()
+        # print(f"{self.customer_detail}")
         # Constants and initialization
         self.serial_number = 1
         self.item_id_search = self.items
@@ -107,51 +115,54 @@ class tab_invoice(ft.Container):
         self.loc = None
         self.padding = ft.padding.all(2)
         self.margin = ft.margin.all(0)
-        self.list_items = {
-            name['item_id']: ft.ListTile(
+        self.list_items = {  
+            name['item_id'].lower(): ft.ListTile(
                 title=ft.Text(f"{name['item_id']} Stock->{name['stock']}"),
                 leading=ft.Image(src="invoice_logo.png", color_blend_mode=ft.BlendMode.SRC_IN, width=24, height=24),
                 trailing=ft.Text(f"{name['item_description']}"),
                 on_click=self.printer,
                 hover_color='pink',
                 style=ft.ListTileStyle.LIST,
-                text_color='black',
+                text_color='white',
                 data=name
             )
             for name in self.item_id_search
         }
+        self.trie_for_id=self.build_trie(self.list_items)
         # Create customer list for search by Mobile Number
         self.list_customer_number = {
-            number: ft.ListTile(
-                title=ft.Text(number),
-                leading=ft.IconButton(ft.Icons.CONTACT_PHONE_OUTLINED),
+            i['mobile'] : ft.ListTile(
+                title=ft.Text(f"{str(i['mobile'])}"),
+                leading=ft.Text(f"{i['cust_id']}"),
                 on_click=self.printer_number,
-                data=number,
+                data=i,
+                trailing=ft.Text(f"{i['person_name']}"),
                 hover_color='pink',
                 style=ft.ListTileStyle.LIST,
-                text_color='black'
+                text_color='white'
             
             )
-            for number in self.customer_mobile_search
-        }
+            for i in self.customer_detail}
+        
         # Create item description search list
         self.list_items_description = {
-            name['item_description']: ft.ListTile(
-                title=ft.Text(name['item_description']),
+            "".join((name['item_description'].lower()).split()): ft.ListTile(
+                title=ft.Text(f"{name['item_description']}"),
                 leading=ft.Image(src="invoice_logo.png", color_blend_mode=ft.BlendMode.SRC_IN, width=24, height=24),
                 on_click=self.printer_description,
                 trailing=ft.Text(f"{name['item_id']} Stock->{name['stock']}"),
                 data=name,
                 hover_color='pink',
                 style=ft.ListTileStyle.LIST,
-                text_color='black'
+                text_color='white'
             )
             for name in self.items_name
         }
+        self.trie=self.build_trie(self.list_items_description)
         # list listView
-        self.search_results = ft.ListView(expand=1, spacing=2, padding=2,auto_scroll=True)
-        self.search_number=ft.ListView(expand=1,spacing=2,padding=2,auto_scroll=True)
-        self.search_description=ft.ListView(expand=1,spacing=2,padding=2,auto_scroll=True)
+        self.search_results = ft.ListView(expand=1,item_extent=300, spacing=2, padding=2,cache_extent=500,auto_scroll=False)
+        self.search_number=ft.ListView(expand=1,spacing=2,item_extent=300,padding=2,cache_extent=500,auto_scroll=False)
+        self.search_description=ft.ListView(expand=1,spacing=2,item_extent=300,padding=2,auto_scroll=False)
         self.default_outstanding_amount=ft.Text("₹0.00",color="#FFD700",weight=ft.FontWeight.W_100)
         # button 
         self.add_button=button_style(text='Add',on_click=self.add_items,col={"sm": 6, "md": 4, "xl": 2},icon=ft.Icons.ADD_OUTLINED)
@@ -210,12 +221,14 @@ class tab_invoice(ft.Container):
                                     capitalizationn=ft.TextCapitalization.CHARACTERS,
                                     kbtype=ft.KeyboardType.STREET_ADDRESS,
                                     on_change=self.textbox_changed,
-                                    col={"sm": 6, "md": 6},  # Matching column width
+                                      # Matching column width
+                                      expand=True,
                                     hint_text="CY,TY,PT")
         self.item_name=text_filed_style(label='Name',
                                     capitalizationn=ft.TextCapitalization.CHARACTERS,
                                     kbtype=ft.KeyboardType.STREET_ADDRESS,on_change=self.textbox_changed_description,
-                                    col={"sm":3, "md": 4},  # Matching column width
+                                      # Matching column width
+                                      expand=True,
                                     hint_text="Product Name")
         self.item_rate=text_filed_style(label='RATE',
                                     capitalizationn=ft.TextCapitalization.CHARACTERS,
@@ -313,6 +326,43 @@ class tab_invoice(ft.Container):
             heading_row_color=ft.Colors.BLACK12,
             heading_row_height=60,expand=True,
         )
+        self.item_id_container=ft.Container(expand=True,
+                                            height=0  ,
+                                            # width =200,
+                                            bgcolor="white10",
+                                            border_radius=15,
+                                            padding=ft.padding.only(top=15,left=21,right=21,bottom=15),
+                                            # clip behv. makes sure there' no overflow
+                                            animate=ft.animation.Animation(1000, ft.AnimationCurve.BOUNCE_IN_OUT),
+                                            clip_behavior=ft.ClipBehavior.HARD_EDGE,
+                                            content=ft.Column(
+                                                controls=[
+                                                    # there will be data display
+                                                    self.search_results,
+                                                    # ft.Column(scroll="auto",expand=True,)
+                                                    # next 
+                                                ],horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                                                alignment=ft.MainAxisAlignment.START
+                                            ))
+        self.item_name_container=ft.Container(expand=True,
+                                            height=0  ,
+                                            # width =200,
+                                            bgcolor="white10",
+                                            border_radius=15,
+                                            padding=ft.padding.only(top=15,left=21,right=21,bottom=15),
+                                            # clip behv. makes sure there' no overflow
+                                            animate=ft.animation.Animation(1000, ft.AnimationCurve.BOUNCE_OUT),
+                                            clip_behavior=ft.ClipBehavior.HARD_EDGE,
+                                            content=ft.Column(
+                                                controls=[
+                        
+                                                    # there will be data display
+                                                    self.search_description,
+                                                    # ft.Column(scroll="auto",expand=True,)
+                                                    # next 
+                                                ],horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                                                alignment=ft.MainAxisAlignment.START
+                                            ))
         self.col1 = ft.Container(
     expand=3,  # Proportional expansion
     alignment=ft.alignment.top_center,
@@ -326,18 +376,13 @@ class tab_invoice(ft.Container):
             ),
             ft.Row([ft.Column([self.customer_mobile,ft.ResponsiveRow([ self.search_number])])]),
 
-            ft.ResponsiveRow(
-                [
-                
-                    
-                ]
-            ),
+            
 
         ],
          scroll=ft.ScrollMode.AUTO,
         spacing=10,  # Adjust spacing between rows for consistency
     ),
-    padding=ft.padding.all(10), bgcolor='#E0F0FF', 
+    padding=ft.padding.all(10), bgcolor='#60a5fa', 
 )
         # right side 
         self.col2= ft.Container( bgcolor=ft.Colors.TRANSPARENT, 
@@ -349,16 +394,21 @@ class tab_invoice(ft.Container):
                 margin=0,
                 padding=10,
                 alignment=ft.alignment.center,
-                bgcolor="#FDEBD0",#"#EBEAFF",
+                bgcolor="#60a5fa",#"#EBEAFF",
                 content=ft.Column(
                     [
                         ft.Row([ft.Text("Goods Entry", size=18,style=self.style_col)], alignment=ft.MainAxisAlignment.CENTER),
-                        ft.ResponsiveRow(
-                            [self.item_id,self.search_results], spacing=10, run_spacing=10  # Add responsive fields here
-                        ),
-                        ft.ResponsiveRow(
-                            [self.item_name,self.search_description], spacing=10, run_spacing=10  # Add responsive fields here
-                        ),
+                        # ft.Row(
+                        #     [], spacing=10, run_spacing=10,expand=True  # Add responsive fields here
+                        # ),
+                        self.item_id,
+                        self.item_id_container,
+                        # ft.Row(
+                        #     [], spacing=10, run_spacing=10 ,expand=True  # Add responsive fields here
+                        # ),
+                        self.item_name,
+                        self.item_name_container,
+                        
                        
                         ft.ResponsiveRow(
                             [self.item_rate,self.unit,self.item_QTY,self.rank,], spacing=10, run_spacing=10,
@@ -376,7 +426,7 @@ class tab_invoice(ft.Container):
                              padding=2,
                             #  width=250,
                              alignment=ft.alignment.top_center,
-                             bgcolor="#AEDFF7",
+                             bgcolor="#60a5fa",
                              content=ft.Row([self.card,ft.Column([
                                     ft.Row([self.grand_total_amount,],alignment=ft.MainAxisAlignment.END),
                                    ft.Row([self.item_discount,],alignment=ft.MainAxisAlignment.END),
@@ -402,10 +452,22 @@ class tab_invoice(ft.Container):
         self.content = ft.Column([layout,ft.ResponsiveRow(
                             [ft.Row([ft.Text("Goods Detail", size=18,style=self.style_col)], alignment=ft.MainAxisAlignment.CENTER),], spacing=10, run_spacing=10  # Add responsive fields here
                         ),self.datatable],horizontal_alignment=ft.CrossAxisAlignment.CENTER,scroll=ft.ScrollMode.ADAPTIVE) 
+    def handle_close_id_filed(self,e):
+        self.item_id.value=""
+        self.item_id_container.height=0
+        self.search_results.controls.clear()
+        self.item_id_container.update()
+    def handle_close_name_filed(self,e):
+        self.item_name_container.height=0
+        self.item_name.value=""
+        self.search_description.controls.clear()
+        self.item_name_container.update()
     def printer(self,e):
         print("id click ")
         print(f"{e.control.data} printed or not")
         id=e.control.data
+        self.handle_close_name_filed(e=None)
+        self.handle_close_id_filed(e=None)
         # print(id)
         self.item_id.value=id['item_id']
         self.item_name.value=id['item_description']
@@ -415,6 +477,12 @@ class tab_invoice(ft.Container):
         self.search_results.controls.clear()
         self.item_QTY.focus()
         self.app_layout.page.update() 
+    def build_trie(self,data):
+        """ Build a trie with item description"""
+        trie=pygtrie.CharTrie()
+        for key, value in data.items():
+            trie[key.lower()]=value
+        return trie
     def printer_number(self,e):
         print("click on list tile on number")
         print(f"{e.control.data} ")
@@ -422,7 +490,9 @@ class tab_invoice(ft.Container):
         print("click on list tile on description")
         print(f"{e.control.data} ")
         self.id=e.control.data
-        # print(id)
+        # print(description)
+        self.handle_close_name_filed(e=None)
+        self.handle_close_id_filed(e=None)
         self.item_id.value=self.id['item_id']
         self.item_name.value=self.id['item_description']
         self.item_rate.value=self.id['wholesale_price']
@@ -465,7 +535,7 @@ class tab_invoice(ft.Container):
         self.rank.value="None"
         self.search_results.controls.clear()
         self.search_description.controls.clear()
-        self.update(self)
+        self.update_()
     def reset(self,e):
         print("reset click ")
         self.item_id.value=""
@@ -480,8 +550,8 @@ class tab_invoice(ft.Container):
         self.customer_mobile.value=""
         self.rank.value="None"
         self.goods_detail.clear()
-        self.app_layout.page.update() 
-    def update(self,e=None):
+        self.content.update()
+    def update_(self,e=None):
         self.datatable.rows.clear()
         serial=1
         for i in self.goods_detail:
@@ -504,7 +574,7 @@ class tab_invoice(ft.Container):
         DISCOUNT_VALUE=sum(item['discount'] for item in self.goods_detail)
         self.grand_total_amount.value=f"Grand Total: Rs.{sum(item['total_amount'] for item in self.goods_detail):.2f}"
         self.item_discount.value =f"{DISCOUNT_VALUE}"
-        self.app_layout.page.update() 
+        self.datatable.update() 
     def editbtn(self,e):
         self.temp_about = ft.Text('Enter Changes Want',col={"md": 3})
         print("Edit button on DataTable")
@@ -565,7 +635,7 @@ class tab_invoice(ft.Container):
         index = e.control.data - 1
         print(f"Deleting row {index}")
         del self.goods_detail[index]
-        self.update()
+        self.update_()
         self.app_layout.page.update()
     def bill_gen(self,e):
         print("generate_bill function in invoice.py")
@@ -590,22 +660,75 @@ class tab_invoice(ft.Container):
     def textbox_changed_number(self,string):
         str_number = string.control.value
         self.search_number.controls = [
-            self.list_customer_number.get(n) for n in self.customer_mobile_search if str_number in n
+            self.list_customer_number.get(n['mobile']) for n in self.customer_detail if str_number in n['mobile']
         ] if str_number else []
-        self.app_layout.page.update()
+        self.search_number.update()
     # for search by goods description 
-    def textbox_changed_description(self, string):
+    # def textbox_changed_description(self, string):# original 
+    #     str_number = string.control.value.lower()
+    #     print(f"update value{str_number}")
+    #     self.search_description.controls = [
+    #         self.list_items_description.get(n['item_description']) for n in self.item_id_search if str_number in n['item_description'].lower()
+    #     ] if str_number else []
+    #     self.search_description.update()
+    def textbox_changed_description(self, string):# original 
         str_number = string.control.value.lower()
-        self.search_description.controls = [
-            self.list_items_description.get(n['item_description']) for n in self.item_id_search if str_number in n['item_description'].lower()
-        ] if str_number else []
-        self.app_layout.page.update()
+        # print(f"update value{str_number}")
+        try :
+            result=[value for key, value in self.trie.items(prefix=str_number)]
+            self.search_description.controls = result if str_number else []
+            if len(self.search_description.controls)==0:
+                self.item_name_container.height=0
+            else: 
+                self.item_name_container.height=min(120+(len(self.search_description.controls)*50),300)
+        except:
+            self.search_description.controls.clear()
+            self.search_description.controls.append(
+                ft.ListTile(
+                    title=ft.Text("Sorry"),
+                    leading=ft.Image(src="invoice_logo.png", color_blend_mode=ft.BlendMode.SRC_IN, width=24, height=24),
+                    on_click=self.printer_description,
+                    trailing=ft.Text(f"No Matches found"),
+                    data="Not_found",  
+                    hover_color='pink',
+                    style=ft.ListTileStyle.LIST,
+                    text_color='white'
+            )
+            )
+            self.item_name_container.height=100
+        self.item_name_container.update()
+    
+
+    # id search
     def textbox_changed(self, string):
         str_lower = string.control.value.lower()
-        self.search_results.controls = [
-            self.list_items.get(n['item_id']) for n in self.item_id_search if str_lower in n['item_id'].lower()
-        ] if str_lower else []
-        self.app_layout.page.update()
+        try:
+            result=[value for key, value in self.trie_for_id.items(prefix=str_lower)]
+            self.search_results.controls=result if str_lower else []
+            if len(self.search_results.controls)==0:
+                self.item_id_container.height=0
+            else: 
+                self.item_id_container.height=min(120+(len(self.search_results.controls)*50),300)
+        except:
+            self.search_results.controls.clear()
+            self.search_results.controls.append(
+                ft.ListTile(
+                    title=ft.Text("Sorry"),
+                    leading=ft.Image(src="invoice_logo.png", color_blend_mode=ft.BlendMode.SRC_IN, width=24, height=24),
+                    on_click=self.printer_description,
+                    trailing=ft.Text(f"No Matches found"),
+                    data="Not_found",  
+                    hover_color='pink',
+                    style=ft.ListTileStyle.LIST,
+                    text_color='white'
+            )
+            )
+            self.item_name_container.height=100
+        # if len(self.search_results.controls)==0:
+        #     self.item_id_container.height=0
+        # else: 
+        #     self.item_id_container.height=min(120+(len(self.search_results.controls)*50),300)
+        self.item_id_container.update()
     def snack_bar_func(self,text):
         
         snack_bar=ft.SnackBar(

@@ -214,7 +214,7 @@ class Statement(ft.Container):
                                         [   ft.Text("Company Details",color='black',size=25, weight="bold",style=self.style_col),
                                            ft.Text(f"Company Name: {self.dealer_data['company_name']}",style=self.style_col),
                                             ft.Text(f"Agent Name: {self.dealer_data['name_agent']}",style=self.style_col),
-                                            ft.Text(f"Address: {self.dealer_data['Address']}",style=self.style_col),
+                                            ft.Text(f"Address: {self.dealer_data['address']}",style=self.style_col),
                                         ],
                                         alignment=ft.MainAxisAlignment.CENTER,
                                         horizontal_alignment=ft.CrossAxisAlignment.CENTER,

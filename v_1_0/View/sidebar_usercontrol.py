@@ -143,14 +143,8 @@ class Sidebar(ft.Container):
                 begin=ft.alignment.top_left,
                 end=ft.Alignment(0.8, 1),
                 colors=[
-                    "#009FBD",
-                    "#333333",
-                    "#929AAB",
-                    "#929AAB",
-                    "#929AAB",
-                    "#606470",
-                    "#393E46",
-                    "#222831",
+                                       '#475569',
+                    '#9ca3af'
                 ],
                 tile_mode=ft.GradientTileMode.MIRROR,
                 rotation=math.pi / 3,

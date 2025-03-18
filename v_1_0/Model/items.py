@@ -2,22 +2,24 @@ import mysql.connector
 from mysql.connector import Error
 import pandas as pd
 import aiomysql
+from dotenv import load_dotenv
 import os
 import asyncio
+load_dotenv()
 class Item:
     def __init__(self):
         self.table_name = "item"
         self.config = {
-            'host': 'localhost',
-            'user': 'root',
-            'password': 'admin',
-            'database': 'rajdistributors_database',
+            'host': os.getenv("host"),
+            'user': os.getenv("user"),
+            'password': os.getenv("password"),
+            'database': os.getenv("database"),
             'raise_on_warnings': True,
         }
         try:
             self.conn = mysql.connector.connect(**self.config)
             self.cursor = self.conn.cursor()
-            print("Connection established")
+            print("Connection established Item table")
         except Error as err:
             self.conn.close()
             print(f"Error connecting to database: {err}")
@@ -30,7 +32,7 @@ class Item:
                 self.cursor = self.conn.cursor()  # Recreate cursor
                 print("Connection re-established")
             except Error as err:
-                print(f"Error reconnecting to database: {err}")
+                return f"Error reconnecting to database: {err}"
 
     def add(self, item_details):
         """Add a new item to the database."""
@@ -62,8 +64,9 @@ class Item:
             self.conn.commit()
             print("Item added successfully.")
         except Error as err:
-            print(f"Error adding item: {err}")
+            return f"Error adding item: {err}"
         finally:
+            # return "Item added successfully."
             self.close_connection()
 
     def remove(self, item_id):
@@ -74,11 +77,12 @@ class Item:
             query = f"DELETE FROM {self.table_name} WHERE item_id = %s"
             self.cursor.execute(query, (item_id,))
             self.conn.commit()
-            return "Item removed successfully."
+            
         except Error as err:
-            print(f"Error removing item: {err}")
+            return f"Error removing item: {err}"
         finally:
             self.close_connection()
+            # return "Item removed successfully."
 
     def update(self, item_id, updates):
         """Update an item's details."""
@@ -92,7 +96,7 @@ class Item:
             self.conn.commit()
             print("Item updated successfully.")
         except Error as err:
-            print(f"Error updating item: {err}")
+            return f"Error updating item: {err}"
         finally:
             self.close_connection()
 
@@ -105,12 +109,13 @@ class Item:
             self.cursor.execute(query, (item_id,))
             columns = [column[0] for column in self.cursor.description]
             item = dict(zip(columns, self.cursor.fetchone()))
-            print(f"Item details: {item}")
-            return item
+            # print(f"Item details: {item}")
+            
         except Exception as e:
-            print(f"Error fetching item details: {e}")
-            return None
+            return "Error fetching item details: {e}"
+            # return None
         finally:
+            return item
             self.close_connection()
     def stock_check(self):
         """Stock Query """
@@ -120,13 +125,15 @@ class Item:
             self.cursor.execute(query)
             columns = [column[0] for column in self.cursor.description]
             item = [dict(zip(columns, row)) for row in self.cursor.fetchall()]
-            print(f"Item details: {item}")
-            return item
+            # print(f"Item details: {item}")
+            
         except Error as err:
             print(f"Error fetching item details: {err}")
             return None
         finally:
+            
             self.close_connection()
+            return item
     def stock_check_specific(self,value):
         """Stock Query """
         self.ensure_connection()
@@ -135,13 +142,16 @@ class Item:
             self.cursor.execute(query)
             columns = [column[0] for column in self.cursor.description]
             item = [dict(zip(columns, row)) for row in self.cursor.fetchall()]
-            print(f"Item details: {item}")
-            return item
+            # print(f"Item details: {item}")
+            
         except Error as err:
             print(f"Error fetching item details: {err}")
             return None
         finally:
+            
             self.close_connection()
+            return item
+            
     def get_item_details2description(self, description):
         """Retrieve details of an item."""
         self.ensure_connection()  # Ensure the database connection is active
@@ -152,12 +162,13 @@ class Item:
             columns = [column[0] for column in self.cursor.description]
             item = [dict(zip(columns, row)) for row in self.cursor.fetchall()]
             print(f"Item details: {item}")
-            return item
+            
         except Error as err:
             print(f"Error fetching item details: {err}")
             return None
         finally:
             self.close_connection()
+            return item
     def list_items(self):
         """List all items."""
         self.ensure_connection()  # Ensure the database connection is active
@@ -167,14 +178,15 @@ class Item:
             self.cursor.execute(query)
             columns = [column[0] for column in self.cursor.description]
             items = [dict(zip(columns, row)) for row in self.cursor.fetchall()]
-            print(f"Items: {items}")
-            return items
+            # print(f"Items: {items}")
+            
         except Error as err:
             print(f"Error listing items: {err}")
             return []
         finally:
             self.close_connection()
-# Close the database connection
+            return items
+    # Close the database connection
     def close_connection(self):
         """Close the database connection."""
         try:

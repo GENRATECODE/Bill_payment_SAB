@@ -3,6 +3,7 @@ from Model.items import Item
 from Model.items import database2excel
 from datetime import datetime
 import flet as ft
+import pygtrie
 import time
 from flet import TextField, Dropdown,ElevatedButton
 import mysql.connector  # Replace with your database connector library
@@ -139,6 +140,7 @@ class stock_modification(ft.Container):
             )
             for item in self.items
         }
+        self.trie_for_id=self.build_trie(self.list_items)
         self.list_items_description = {
             name['item_description']: ft.ListTile(
                 title=ft.Text(name['item_description']),
@@ -153,10 +155,11 @@ class stock_modification(ft.Container):
             )
             for name in self.items
         }
+        self.trie=self.build_trie(self.list_items_description)
         # above list tile for search Result
 # print(self.list_items)# this line code run according my will 
-        self.select_value = ft.Column(scroll="auto",expand=True,)#ft.ListView(auto_scroll=True)
-        self.search_description=ft.Column(scroll="auto",expand=True,)
+        self.select_value = ft.ListView(expand=1,item_extent=300, spacing=2, padding=2,cache_extent=500,auto_scroll=False)#ft.ListView(auto_scroll=True)
+        self.search_description=ft.ListView(expand=1,item_extent=300, spacing=2, padding=2,cache_extent=500,auto_scroll=False)
         #using searchbar TextField 
         self.using_id=ft.TextField(width=500,
                                   hint_text="  Search Item Detail By ID :)",bgcolor="transparent",
@@ -318,6 +321,12 @@ class stock_modification(ft.Container):
         self.Retail_price=""
         self.Whole_price=""
         self.update()
+    def build_trie(self,data):
+        """ Build a trie with item description"""
+        trie=pygtrie.CharTrie()
+        for key, value in data.items():
+            trie[key.lower()]=value
+        return trie
     def calculation(self,e):
         self.Retail_price.value = float(self.amount.value) * (1 + float(self.Gst.value) /100)+float(self.Retail_Profit.value)
         self.Whole_price.value=float(self.amount.value) * (1 + float(self.Gst.value) /100)+float(self.WholeSale_profit.value)
@@ -335,26 +344,71 @@ class stock_modification(ft.Container):
         self.item_name_container.update()
     def textbox_changed_description(self, string):
         # print("id on change through text Field")
-        str_number = string.control.value.lower()
-        self.search_description.controls = [
-            self.list_items_description.get(n['item_description']) for n in self.items  if str_number in n['item_description'].lower()
-        ] if str_number else []
-        if len(self.search_description.controls)==0:
-            self.item_name_container.height=70
-        else: 
-            self.item_name_container.height=min(120+(len(self.search_description.controls)*50),300)
+        value=string.control.value.lower()
+        try:
+            result=[value for key, value in self.trie.items(prefix=value)]
+            self.search_description.controls=result if value else []
+            if len(self.search_description.controls)==0:
+                self.item_name_container.height=70
+            else: 
+                self.item_name_container.height=min(200+(len(self.select_value.controls)*50),400)
+        except:
+            self.search_description.controls.clear()
+            self.search_description.controls.append(
+                ft.ListTile(
+                    title=ft.Text("Sorry"),
+                    leading=ft.Image(src="invoice_logo.png", color_blend_mode=ft.BlendMode.SRC_IN, width=24, height=24),
+                    on_click=lambda _ : self.snack_bar_func(f"Does not Find any Result"),
+                    trailing=ft.Text(f"No Matches found"),
+                    data="Not_found",  
+                    hover_color='pink',
+                    style=ft.ListTileStyle.LIST,
+                    text_color='white'
+            )
+            )
+            self.item_name_container.height=120 
+        # self.searh_description.controls = [
+        #     self.list_items_description.get(n['item_description']) for n in self.items  if str_number in n['item_description'].lower()
+        # ] if str_number else []
+        # if len(self.search_description.controls)==0:
+        #     self.item_name_container.height=70
+        # else: 
+        #     self.itemc_name_container.height=min(120+(len(self.search_description.controls)*50),300)
         self.item_name_container.update()
 
     def on_search_change(self,e):  
         # print("Description change through text Field")
         search_query=e.control.value.lower()
-        self.select_value.controls =[
-            self.list_items.get(n['item_id']) for n in self.items if search_query in n['item_id'].lower() 
-        ] if search_query else []
-        if len(self.select_value.controls)==0:
-            self.item_id_container.height=70
-        else: 
-            self.item_id_container.height=min(120+(len(self.select_value.controls)*50),300)
+        try:
+            result=[value for key, value in self.trie_for_id.items(prefix=search_query)]
+            self.select_value.controls=result if search_query else []
+            print(result)
+            if len(self.select_value.controls)==0:
+                self.item_id_container.height=70
+            else: 
+                self.item_id_container.height=min(200+(len(self.select_value.controls)*50),300)
+        except:
+            self.select_value.controls.clear()
+            self.select_value.controls.append(
+                ft.ListTile(
+                    title=ft.Text("Sorry"),
+                    leading=ft.Image(src="invoice_logo.png", color_blend_mode=ft.BlendMode.SRC_IN, width=24, height=24),
+                    on_click=lambda _ : self.snack_bar_func(f"Does not Find any Result"),
+                    trailing=ft.Text(f"No Matches found"),
+                    data="Not_found",  
+                    hover_color='pink',
+                    style=ft.ListTileStyle.LIST,
+                    text_color='white'
+            )
+            )
+            self.item_id_container.height=170        
+        # self.select_value.controls =[
+        #     self.list_items.get(n['item_id']) for n in self.items if search_query in n['item_id'].lower() 
+        # ] if search_query else []
+        # if len(self.select_value.controls)==0:
+        #     self.item_id_container.height=70
+        # else: 
+        #     self.item_id_container.height=min(120+(len(self.select_value.controls)*50),300)
         self.item_id_container.update()
     def printer(self, event):
         """Print the data of the selected ListTile. for IDS"""

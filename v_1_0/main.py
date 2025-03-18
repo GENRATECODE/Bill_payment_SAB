@@ -22,6 +22,7 @@ class ShopMangement:
         self.page.padding=0
         self.page.auto_scroll=False
         self.page.scroll=ft.ScrollMode.ADAPTIVE
+        # self.page.show_semantics_debugger=True
         # Page LISt 
 
         page.title = "Bill And Management "
@@ -34,7 +35,9 @@ class ShopMangement:
         macos=ft.PageTransitionTheme.FADE_UPWARDS,
         linux=ft.PageTransitionTheme.ZOOM,
         windows=ft.PageTransitionTheme.CUPERTINO
-    ))
+    ))  
+        # size 
+        page.window.maximized=True
         # page.theme.page_transitions.windows = "cupertino"
         page.fonts = {
                 "sonic": "assets/font/Freedom-10eM.ttf",
@@ -93,14 +96,8 @@ class ShopMangement:
                 begin=ft.alignment.top_left,
                 end=ft.Alignment(0.8, 1),
                 colors=[
-                    "#009FBD",
-                    "#333333",
-                    "#929AAB",
-                    "#929AAB",
-                    "#929AAB",
-                    "#606470",
-                    "#393E46",
-                    "#222831",
+                    '#475569',
+                    '#9ca3af'
                 ]),
                         ),
                  bgcolor=ft.Colors.TRANSPARENT,
@@ -125,14 +122,8 @@ class ShopMangement:
                 begin=ft.alignment.top_left,
                 end=ft.Alignment(0.8, 1),
                 colors=[
-                    "#009FBD",
-                    "#333333",
-                    "#929AAB",
-                    "#929AAB",
-                    "#929AAB",
-                    "#606470",
-                    "#393E46",
-                    "#222831",
+                     '#475569',
+                    '#9ca3af'
                 ]),
                         ),
                  bgcolor=ft.Colors.TRANSPARENT,
