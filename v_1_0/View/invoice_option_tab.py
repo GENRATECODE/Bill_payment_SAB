@@ -551,7 +551,7 @@ class tab_invoice(ft.Container):
         self.rank.value="None"
         self.goods_detail.clear()
         self.content.update()
-    def update_(self,e=None):
+    def update_table(self,e=None):
         self.datatable.rows.clear()
         serial=1
         for i in self.goods_detail:
@@ -742,6 +742,7 @@ class tab_invoice(ft.Container):
         self.page.overlay.append(snack_bar)
         snack_bar.open=True
         self.app_layout.page.update()
+        
     # def textbox_changes(self,string):
     #     str_lower=string.control.value.lower()
     #     self.search_results.controls=[

@@ -1,5 +1,4 @@
 from flet import (
-    UserControl,
     Column,
     Container,
     IconButton,

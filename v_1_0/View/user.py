@@ -1,13 +1,12 @@
 import flet as ft
 import os
 import sys
-from flet import UserControl
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from Controller.bill_number_generator_sec import onlyread_sec, update_sec
 from Controller.bill_number_generator import onlyread, update
 
-class ProfileAPP(UserControl):  # Inherit from UserControl
+class ProfileAPP(ft.Container):  # Inherit from UserControl
     def __init__(self, page: ft.Page):
         super().__init__()  # Call the parent class constructor
         self.page = page
@@ -78,6 +77,7 @@ class ProfileAPP(UserControl):  # Inherit from UserControl
             tooltip="Profile Photo"
         )  # Initial image
         self.mobile = ft.Text(self.temp_mobile, color='red')
+        self.content=self.build()
 
     def photo_upload_result(self, e: ft.FilePickerResultEvent):
         # Update the profile photo after a new one is picked

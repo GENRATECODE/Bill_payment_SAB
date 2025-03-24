@@ -1,5 +1,4 @@
 from flet import (
-    UserControl,
     Column,
     Container,
     IconButton,
@@ -92,6 +91,12 @@ class Sidebar(ft.Container):
             ),            NavigationRailDestination(
                 label_content=Text("Daily Spend",style=self.text_nav_style),
                 label="Daily Spend",
+                icon=icons.PERSON,
+                selected_icon=icons.PERSON
+            ),
+              NavigationRailDestination(
+                label_content=Text("Price Tag Gen",style=self.text_nav_style),
+                label="Price Tag",
                 icon=icons.PERSON,
                 selected_icon=icons.PERSON
             ),
@@ -196,6 +201,9 @@ class Sidebar(ft.Container):
             # self.page.route = "/members"
         elif index == 8:
             print(f"8")
+            self.app_layout.change_active_view("Daily_spend_app")
+        elif index == 9:
+            print(f"9")
             self.app_layout.change_active_view("Daily_spend_app")
 
             # self.page.route = "/members"
